@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>OratorJudge Pro</title>
   
-  <!-- ─── COMPLETE PWA MANIFEST ─── -->
-  <link rel="manifest" href="data:application/json;base64,ewogICJpZCI6ICJvcmF0b3JqdWRnZS1wcm8iLAogICJuYW1lIjogIk9yYXRvckp1ZGdlIFBybyIsCiAgInNob3J0X25hbWUiOiAiT3JhdG9ySnVkZ2UiLAogICJkZXNjcmlwdGlvbiI6ICJQcm9mZXNzaW9uYWwgc3BlZWNoIGV2YWx1YXRpb24gcGxhdGZvcm0gZm9yIGp1ZGdlcyBhbmQgc3BlYWtlcnMuIiwKICAic3RhcnRfdXJsIjogIi4iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJvcmllbnRhdGlvbiI6ICJwb3J0cmFpdCIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzA1MDcwZiIsCiAgInRoZW1lX2NvbG9yIjogIiMwNTA3MGYiLAogICJjYXRlZ29yaWVzIjogWyJlZHVjYXRpb24iLCAicHJvZHVjdGl2aXR5Il0sCiAgImxhbmciOiAiZW4iLAogICJkaXIiOiAibHRyIiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9wbmc7YmFzZTY0LGlWQk9SdzBLR2dvQUFBQU5TVWhFVWdBQUJBQUFBQVFDTUFBQUFEWUlsNkFBQUFIVk5GV1cxd1RnQUFBRWxsRVFWUmluM1FBakNBaUphZ1kwbTNtcTZ1cHJtaU9pajBJWWdua1hBQkVFUkRVTkNxTFhFU29PQkJCU0I2QTVYREFtTldZQ0RUVUVJTEZnZ1l3VWpCRE1Vd3pUeUlHTVVLN0o3SUlJQkVTSVp3QVh5UXd6N3pXN3pOb1pnQkFmRlFGSkt5T0VrZWpPZUhEQ0pNT2Z1cG9aSlJ3QkFBZURFNE0wbElkSU1hNkFBQUFBQkpSVTVFcmtKZ2dnPT0iLAogICAgICAic2l6ZXMiOiAiMTkyeDE5MiIsCiAgICAgICJ0eXBlIjogImltYWdlL3BuZyIsCiAgICAgICJwdXJwb3NlIjogImFueSBtYXNrYWJsZSIKICAgIH0sCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9wbmc7YmFzZTY0LGlWQk9SdzBLR2dvQUFBQU5TVWhFVWdBQUJBQUFBQVFDTUFBQUFEWUlsNkFBQUFIVk5GV1cxd1RnQUFBRWxsRVFWUmluM1FBakNBaUphZ1kwbTNtcTZ1cHJtaU9pajBJWWdua1hBQkVFUkRVTkNxTFhFU29PQkJCU0I2QTVYREFtTldZQ0RUVUVJTEZnZ1l3VWpCRE1Vd3pUeUlHTVVLN0o3SUlJQkVTSVp3QVh5UXd6N3pXN3pOb1pnQkFmRlFGSkt5T0VrZWpPZUhEQ0pNT2Z1cG9aSlJ3QkFBZURFNE0wbElkSU1hNkFBQUFBQkpSVTVFcmtKZ2dnPT0iLAogICAgICAic2l6ZXMiOiAiNTEyeDUxMiIsCiAgICAgICJ0eXBlIjogImltYWdlL3BuZyIsCiAgICAgICJwdXJwb3NlIjogImFueSBtYXNrYWJsZSIKICAgIH0KICBdCn0=">
+  <!-- ─── PWA MANIFEST ─── -->
+  <link rel="manifest" href="manifest.json">
   
   <!-- ─── APP ICONS ─── -->
-  <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAADkR5lnAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZAAAAA9QTFRFAAAA5LpPAJmZAIODIGBg////LgAAAAAAAAAAAAF0Uk5TAEDm2GYAAAABYktHRAH/Ai3eAAAAB3RJTUUH6AkEFjA1fz8ajQAAAAd0RVh0QXV0aG9yAKmuzEgAAAAMdEVYdERlc2NyaXB0aW9uABMJISMAAAAKdEVYdENvcHlyaWdodACsD8w6AAAADnRFWHRDcmVhdGlvbiB0aW1lADX3DwkAAAAJdEVYdFNvZnR3YXJlAF1w/zoAAAALdEVYdERpc2NsYWltZXIAt8C0jwAAAAh0RVh0V2FybmluZwDAG+aHAAAAB3RFWHRTb3VyY2UA9f+D6wAAAAh0RVh0Q29tbWVudAD2zJa/AAAABnRFWHRUaXRsZQCo7tInAAAAB3RFWHRQYXNzd29yZAD1s3GJAAAAB3RFWHRDcmVhdG9yALWj6p0AAAAHdEVYdFZlcnNpb24A0+Yg2QAAACV0RVh0Q29weXJpZ2h0IE5vdGljZTogQ29weXJpZ2h0IChjKSAyMDI0ABuN1L4AAAAldEVYdERlc2NyaXB0aW9uOiBQcm9mZXNzaW9uYWwgZXZhbHVhdGlvbgCxV8i1AAAAGXRFWHRDcmVhdGlvbiBUaW1lOiAyMDI0LTA2LTE2AA9Q4bsAAAAZdEVYdFNvZnR3YXJlOiBQV0EgQnVpbGRlciAoYykA8OXn7AAAAABJRU5ErkJggg==">
-  <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAADkR5lnAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZAAAAA9QTFRFAAAA5LpPAJmZAIODIGBg////LgAAAAAAAAAAAAF0Uk5TAEDm2GYAAAABYktHRAH/Ai3eAAAAB3RJTUUH6AkEFjA1fz8ajQAAAAd0RVh0QXV0aG9yAKmuzEgAAAAMdEVYdERlc2NyaXB0aW9uABMJISMAAAAKdEVYdENvcHlyaWdodACsD8w6AAAADnRFWHRDcmVhdGlvbiB0aW1lADX3DwkAAAAJdEVYdFNvZnR3YXJlAF1w/zoAAAALdEVYdERpc2NsYWltZXIAt8C0jwAAAAh0RVh0V2FybmluZwDAG+aHAAAAB3RFWHRTb3VyY2UA9f+D6wAAAAh0RVh0Q29tbWVudAD2zJa/AAAABnRFWHRUaXRsZQCo7tInAAAAB3RFWHRQYXNzd29yZAD1s3GJAAAAB3RFWHRDcmVhdG9yALWj6p0AAAAHdEVYdFZlcnNpb24A0+Yg2QAAACV0RVh0Q29weXJpZ2h0IE5vdGljZTogQ29weXJpZ2h0IChjKSAyMDI0ABuN1L4AAAAldEVYdERlc2NyaXB0aW9uOiBQcm9mZXNzaW9uYWwgZXZhbHVhdGlvbgCxV8i1AAAAGXRFWHRDcmVhdGlvbiBUaW1lOiAyMDI0LTA2LTE2AA9Q4bsAAAAZdEVYdFNvZnR3YXJlOiBQV0EgQnVpbGRlciAoYykA8OXn7AAAAABJRU5ErkJggg==">
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
   
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -21,7 +21,7 @@
   <!-- ─── SERVICE WORKER ─── -->
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register(window.location.href + '?sw')
+      navigator.serviceWorker.register('/sw.js')
         .then(() => console.log('✅ Service Worker registered'))
         .catch(() => console.log('❌ Service Worker registration failed'));
     }
@@ -31,6 +31,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   
   <style>
+    /* ─── YOUR FULL CSS HERE (same as before) ─── */
     :root {
       --bg: #05070f;
       --bg2: #0c0f1e;
@@ -1210,7 +1211,7 @@
 <script>
 // ─── SERVICE WORKER ───
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register(window.location.href + '?sw')
+  navigator.serviceWorker.register('/sw.js')
     .then(() => console.log('✅ Service Worker registered'))
     .catch(() => console.log('❌ Service Worker registration failed'));
 }

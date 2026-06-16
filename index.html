@@ -379,13 +379,33 @@
       background: var(--surface2);
       border: 1px solid var(--border);
       transition: all 0.3s ease;
-      cursor: pointer;
       position: relative;
       flex-shrink: 0;
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
       -webkit-user-select: none;
       user-select: none;
+    }
+    /* Only make the timer background clickable, not the whole area */
+    .timer-wrap .click-area {
+      position: absolute;
+      inset: 0;
+      cursor: pointer;
+      z-index: 1;
+    }
+    .timer-wrap .timer-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      pointer-events: none;
+    }
+    .timer-wrap .timer-content .timer-ctrl-btn {
+      pointer-events: auto !important;
+      z-index: 3;
+      position: relative;
     }
     .timer-wrap:hover { border-color: rgba(255,255,255,0.15); }
     .timer-label {
@@ -978,28 +998,11 @@
       }
     }
 
-    /* Ensure inputs are clickable and don't lose focus */
+    /* Ensure inputs are clickable */
     .field input, .field textarea, .field select {
       position: relative;
       z-index: 5;
       pointer-events: auto !important;
-    }
-
-    /* Prevent timer from stealing focus */
-    .timer-wrap {
-      pointer-events: auto;
-    }
-    .timer-wrap * {
-      pointer-events: none;
-    }
-    .timer-wrap .timer-ctrl-btn {
-      pointer-events: auto !important;
-    }
-
-    /* Fix for iOS */
-    input[type="text"], input[type="password"], textarea {
-      -webkit-writing-mode: horizontal-tb !important;
-      writing-mode: horizontal-tb !important;
     }
   </style>
 </head>
@@ -1041,12 +1044,15 @@
     <div class="score-pill" id="topbarScore">⭐ 0 / 50</div>
 
     <!-- Countdown Timer -->
-    <div class="timer-wrap" id="timerWrap" title="Click to start/pause">
-      <div class="timer-label">Speech Timer</div>
-      <div class="timer-display" id="timerDisplay">5:00</div>
-      <div class="timer-controls">
-        <button class="timer-ctrl-btn" id="timerStartBtn" title="Start / Pause"><i class="fas fa-play"></i></button>
-        <button class="timer-ctrl-btn" id="timerResetBtn" title="Reset"><i class="fas fa-undo"></i></button>
+    <div class="timer-wrap" id="timerWrap">
+      <div class="click-area" id="timerClickArea"></div>
+      <div class="timer-content">
+        <div class="timer-label">Speech Timer</div>
+        <div class="timer-display" id="timerDisplay">5:00</div>
+        <div class="timer-controls">
+          <button class="timer-ctrl-btn" id="timerStartBtn" title="Start / Pause"><i class="fas fa-play"></i></button>
+          <button class="timer-ctrl-btn" id="timerResetBtn" title="Reset"><i class="fas fa-undo"></i></button>
+        </div>
       </div>
     </div>
 
@@ -1548,7 +1554,6 @@ function renderRubricPanel(container) {
 
   container.querySelectorAll('.criteria-header').forEach(hdr => {
     hdr.addEventListener('click', (e) => {
-      // Don't toggle if clicking on input or button inside
       if (e.target.closest('input') || e.target.closest('button') || e.target.closest('textarea') || e.target.closest('select')) return;
       const item = hdr.closest('.criteria-item');
       const wasOpen = item.classList.contains('open');
@@ -1571,7 +1576,6 @@ function renderRubricPanel(container) {
 
   container.querySelectorAll('textarea[data-comment]').forEach(ta => {
     ta.addEventListener('input', () => { comments[ta.dataset.comment] = ta.value; });
-    ta.addEventListener('focus', (e) => { e.stopPropagation(); });
   });
 
   container.querySelector('#rSaveBtn').addEventListener('click', saveEvaluation);
@@ -1850,36 +1854,26 @@ function initApp() {
     showNotification('👋 Logged Out', 'You have been signed out successfully.', 'info', 3000);
   });
 
-  // Timer - Fix: Only the timer itself and its control buttons should be interactive
-  const timerWrap = document.getElementById('timerWrap');
+  // Timer - Completely redesigned to avoid interference with inputs
+  const timerClickArea = document.getElementById('timerClickArea');
   const timerStartBtn = document.getElementById('timerStartBtn');
   const timerResetBtn = document.getElementById('timerResetBtn');
   
-  // Remove old listeners by cloning
-  const newTimerWrap = timerWrap.cloneNode(true);
-  timerWrap.parentNode.replaceChild(newTimerWrap, timerWrap);
-  
-  const newTimerStartBtn = document.getElementById('timerStartBtn');
-  const newTimerResetBtn = document.getElementById('timerResetBtn');
-  
-  // Only the timer wrap itself triggers toggle, but we prevent it from stealing focus
-  newTimerWrap.addEventListener('click', (e) => {
-    // Only trigger if not clicking on control buttons
-    if (!e.target.closest('.timer-ctrl-btn')) {
-      e.preventDefault();
-      toggleTimer();
-    }
-  });
-  
-  newTimerStartBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
+  timerClickArea.addEventListener('click', (e) => {
     e.preventDefault();
+    e.stopPropagation();
     toggleTimer();
   });
   
-  newTimerResetBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
+  timerStartBtn.addEventListener('click', (e) => {
     e.preventDefault();
+    e.stopPropagation();
+    toggleTimer();
+  });
+  
+  timerResetBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     resetTimer();
   });
 

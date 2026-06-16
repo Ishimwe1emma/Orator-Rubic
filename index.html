@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>OratorJudge Pro</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -386,7 +386,6 @@
       -webkit-user-select: none;
       user-select: none;
     }
-    /* Only make the timer background clickable, not the whole area */
     .timer-wrap .click-area {
       position: absolute;
       inset: 0;
@@ -984,18 +983,6 @@
       user-select: text !important;
       touch-action: manipulation !important;
       -webkit-touch-callout: default !important;
-    }
-
-    @media (max-width: 768px) {
-      input[type="text"],
-      input[type="password"],
-      input[type="email"],
-      input[type="number"],
-      input[type="search"],
-      textarea,
-      select {
-        font-size: 16px !important;
-      }
     }
 
     /* Ensure inputs are clickable */
@@ -1854,7 +1841,7 @@ function initApp() {
     showNotification('👋 Logged Out', 'You have been signed out successfully.', 'info', 3000);
   });
 
-  // Timer - Completely redesigned to avoid interference with inputs
+  // Timer
   const timerClickArea = document.getElementById('timerClickArea');
   const timerStartBtn = document.getElementById('timerStartBtn');
   const timerResetBtn = document.getElementById('timerResetBtn');
@@ -1880,11 +1867,10 @@ function initApp() {
   updateTimerUI();
   renderAllPanels();
 
-  let resizeTimer;
-  window.addEventListener('resize', () => { 
-    clearTimeout(resizeTimer); 
-    resizeTimer = setTimeout(renderAllPanels, 100); 
-  });
+  // ✅ FIX: Remove the resize event listener that was re-rendering the DOM and causing inputs to lose focus
+  // The old code had: window.addEventListener('resize', () => { renderAllPanels(); });
+  // This was the ROOT CAUSE of the keyboard issue on mobile!
+  // We now handle responsive changes only when the panel structure actually changes (login/logout)
 }
 
 // ─── POPULATE DISTRICT DROPDOWN ───

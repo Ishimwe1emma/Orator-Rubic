@@ -5,15 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>OratorJudge Pro</title>
   
-  <!-- ─── PWA MANIFEST ─── -->
-  <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIk9yYXRvckp1ZGdlIFBybyIsCiAgInNob3J0X25hbWUiOiAiT3JhdG9ySnVkZ2UiLAogICJkZXNjcmlwdGlvbiI6ICJQcm9mZXNzaW9uYWwgc3BlZWNoIGV2YWx1YXRpb24gcGxhdGZvcm0iLAogICJzdGFydF91cmwiOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzA1MDcwZiIsCiAgInRoZW1lX2NvbG9yIjogIiMwNTA3MGYiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWwsJTNDc3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgdmlld0JveD0nMCAwIDUxMiA1MTInJTNFJTNDcmVjdCB3aWR0aD0nNTEyJyBoZWlnaHQ9JzUxMicgcng9JzEwMCcgZmlsbD0nJTA1MDcwZicvJTNFJTNDY2lyY2xlIGN4PScyNTYnIGN5PScyNTYnIHI9JzE4MCcgZmlsbD0nbm9uZScgc3Ryb2tlPSclMjNmZmI3NGQnIHN0cm9rZS13aWR0aD0nMjAnLyUzRSUzQ3BhdGggZD0nTTE4MCAyMDAgTDIyMCAyMDAgTDIyMCAzMjAgTDE4MCAzMjAgWicgZmlsbD0nJTIzZmZiNzRkJy8lM0UlM0NwYXRoIGQ9J00yOTIgMjAwIEwzMzIgMjAwIEwzMzIgMzIwIEwyOTIgMzIwIFonIGZpbGw9JyUyM2ZmYjc0ZCcvJTNFJTNDcGF0aCBkPSdNMjM2IDE3MCBMMjU2IDE0MCBMMjc2IDE3MCBMMjc2IDIyMCBMMjM2IDIyMCBaJyBmaWxsPSclMjNmZmI3NGQnLyUzRSUzQ3BhdGggZD0nTTIzNiAzNDAgTDI1NiAzNzAgTDI3NiAzNDAgTDI3NiAyOTAgTDIzNiAyOTAgWicgZmlsbD0nJTIzZmZiNzRkJy8lM0UlM0NjaXJjbGUgY3g9JzI1NicgY3k9JzI1Nicgcj0nNDAnIGZpbGw9J25vbmUnIHN0cm9rZT0nJTIzZmZiNzRkJyBzdHJva2Utd2lkdGg9JzEyJy8lM0UlM0Mvc3ZnJTNFIgogICAgfQogIF0KfQ==">
+  <!-- ─── PWA MANIFEST (Base64 encoded) ─── -->
+  <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIk9yYXRvckp1ZGdlIFBybyIsCiAgInNob3J0X25hbWUiOiAiT3JhdG9ySnVkZ2UiLAogICJkZXNjcmlwdGlvbiI6ICJQcm9mZXNzaW9uYWwgc3BlZWNoIGV2YWx1YXRpb24gcGxhdGZvcm0iLAogICJzdGFydF91cmwiOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgIm9yaWVudGF0aW9uIjogInBvcnRyYWl0IiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDUwNzBmIiwKICAidGhlbWVfY29sb3IiOiAiIzA1MDcwZiIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCw8c3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgdmlld0JveD0nMCAwIDUxMiA1MTInPjxyZWN0IHdpZHRoPSc1MTInIGhlaWdodD0nNTEyJyByeD0nMTAwJyBmaWxsPSclMjMwNTA3MGYnLz48Y2lyY2xlIGN4PScyNTYnIGN5PScyNTYnIHI9JzE4MCcgZmlsbD0nbm9uZScgc3Ryb2tlPSclMjNmZmI3NGQnIHN0cm9rZS13aWR0aD0nMjAnLz48cGF0aCBkPSdNMTgwIDIwMCBMMjIwIDIwMCBMMjIwIDMyMCBMMTgwIDMyMCBaJyBmaWxsPSclMjNmZmI3NGQnLz48cGF0aCBkPSdNMjkyIDIwMCBMMzMyIDIwMCBMMzMyIDMyMCBMMjkyIDMyMCBaJyBmaWxsPSclMjNmZmI3NGQnLz48cGF0aCBkPSdNMjM2IDE3MCBMMjU2IDE0MCBMMjc2IDE3MCBMMjc2IDIyMCBMMjM2IDIyMCBaJyBmaWxsPSclMjNmZmI3NGQnLz48cGF0aCBkPSdNMjM2IDM0MCBMMjU2IDM3MCBMMjc2IDM0MCBMMjc2IDI5MCBMMjM2IDI5MCBaJyBmaWxsPSclMjNmZmI3NGQnLz48Y2lyY2xlIGN4PScyNTYnIGN5PScyNTYnIHI9JzQwJyBmaWxsPSdub25lJyBzdHJva2U9JyUyM2ZmYjc0ZCcgc3Ryb2tlLXdpZHRoPScxMicvPjwvc3ZnPg==",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%23050f1a'/%3E%3Ccircle cx='256' cy='256' r='180' fill='none' stroke='%23ffb74d' stroke-width='20'/%3E%3Cpath d='M180 200 L220 200 L220 320 L180 320 Z' fill='%23ffb74d'/%3E%3Cpath d='M292 200 L332 200 L332 320 L292 320 Z' fill='%23ffb74d'/%3E%3Cpath d='M236 170 L256 140 L276 170 L276 220 L236 220 Z' fill='%23ffb74d'/%3E%3Cpath d='M236 340 L256 370 L276 340 L276 290 L236 290 Z' fill='%23ffb74d'/%3E%3Ccircle cx='256' cy='256' r='40' fill='none' stroke='%23ffb74d' stroke-width='12'/%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ]
+fQ==">
   
   <!-- ─── APP ICONS ─── -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%23050f1a'/%3E%3Ccircle cx='256' cy='256' r='180' fill='none' stroke='%23ffb74d' stroke-width='20'/%3E%3Cpath d='M180 200 L220 200 L220 320 L180 320 Z' fill='%23ffb74d'/%3E%3Cpath d='M292 200 L332 200 L332 320 L292 320 Z' fill='%23ffb74d'/%3E%3Cpath d='M236 170 L256 140 L276 170 L276 220 L236 220 Z' fill='%23ffb74d'/%3E%3Cpath d='M236 340 L256 370 L276 340 L276 290 L236 290 Z' fill='%23ffb74d'/%3E%3Ccircle cx='256' cy='256' r='40' fill='none' stroke='%23ffb74d' stroke-width='12'/%3E%3C/svg%3E">
   <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%23050f1a'/%3E%3Ccircle cx='256' cy='256' r='180' fill='none' stroke='%23ffb74d' stroke-width='20'/%3E%3Cpath d='M180 200 L220 200 L220 320 L180 320 Z' fill='%23ffb74d'/%3E%3Cpath d='M292 200 L332 200 L332 320 L292 320 Z' fill='%23ffb74d'/%3E%3Cpath d='M236 170 L256 140 L276 170 L276 220 L236 220 Z' fill='%23ffb74d'/%3E%3Cpath d='M236 340 L256 370 L276 340 L276 290 L236 290 Z' fill='%23ffb74d'/%3E%3Ccircle cx='256' cy='256' r='40' fill='none' stroke='%23ffb74d' stroke-width='12'/%3E%3C/svg%3E">
+  
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="OratorJudge">
+  <meta name="theme-color" content="#05070f">
+  <meta name="msapplication-TileColor" content="#05070f">
   
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -1061,6 +1074,16 @@
       z-index: 5;
       pointer-events: auto !important;
     }
+
+    /* PWA standalone mode fixes */
+    @media (display-mode: standalone) {
+      body {
+        background: var(--bg);
+      }
+      #topbar {
+        padding-top: env(safe-area-inset-top);
+      }
+    }
   </style>
 </head>
 <body>
@@ -1078,7 +1101,7 @@
     <div style="display:flex; gap:0.5rem; margin-bottom: 1.5rem; flex-wrap:wrap;">
       <!-- Download App - Visible only on mobile -->
       <button class="download-app-btn hide-on-desktop" id="downloadAppBtn" style="flex:1; justify-content:center;">
-        <i class="fas fa-download"></i> Install App
+        <i class="fas fa-download"></i> <span id="installBtnText">Install App</span>
         <span class="badge">PWA</span>
       </button>
       <!-- Share Button - Visible on both mobile and desktop -->
@@ -1171,6 +1194,17 @@
 <div id="printArea"></div>
 
 <script>
+// ─── REGISTER SERVICE WORKER ───
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register(window.location.href + '?sw')
+    .then(() => {
+      console.log('Service Worker registered');
+    })
+    .catch(() => {
+      console.log('Service Worker registration failed');
+    });
+}
+
 // ─── RWANDAN DISTRICTS ───
 const RWANDAN_DISTRICTS = [
   'Bugesera', 'Burera', 'Gakenke', 'Gasabo', 'Gatsibo', 'Gicumbi', 
@@ -1286,7 +1320,6 @@ function shareApp() {
     navigator.share(shareData).then(() => {
       showNotification('✅ Shared', 'App link shared successfully!', 'success', 3000);
     }).catch((err) => {
-      // User cancelled or share failed - don't show error
       if (err.name !== 'AbortError') {
         console.log('Share cancelled or failed');
       }
@@ -1299,7 +1332,6 @@ function shareApp() {
         showNotification('📋 Copied', 'App link copied to clipboard!', 'success', 3000);
       });
     } else {
-      // Fallback for older browsers
       const textarea = document.createElement('textarea');
       textarea.value = url;
       textarea.style.position = 'fixed';
@@ -1325,8 +1357,10 @@ window.addEventListener('beforeinstallprompt', (e) => {
   window.deferredPrompt = e;
   // Update download button text
   const downloadBtn = document.getElementById('downloadAppBtn');
-  if (downloadBtn) {
-    downloadBtn.innerHTML = `<i class="fas fa-download"></i> Install App <span class="badge">PWA</span>`;
+  const btnText = document.getElementById('installBtnText');
+  if (downloadBtn && btnText) {
+    btnText.textContent = 'Install App';
+    downloadBtn.innerHTML = `<i class="fas fa-download"></i> <span id="installBtnText">Install App</span> <span class="badge">PWA</span>`;
   }
 });
 

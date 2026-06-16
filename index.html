@@ -4,6 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>OratorJudge Pro</title>
+  
+  <!-- ─── APP ICONS ─── -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%23050f1a'/%3E%3Ccircle cx='256' cy='256' r='180' fill='none' stroke='%23ffb74d' stroke-width='20'/%3E%3Cpath d='M180 200 L220 200 L220 320 L180 320 Z' fill='%23ffb74d'/%3E%3Cpath d='M292 200 L332 200 L332 320 L292 320 Z' fill='%23ffb74d'/%3E%3Cpath d='M236 170 L256 140 L276 170 L276 220 L236 220 Z' fill='%23ffb74d'/%3E%3Cpath d='M236 340 L256 370 L276 340 L276 290 L236 290 Z' fill='%23ffb74d'/%3E%3Ccircle cx='256' cy='256' r='40' fill='none' stroke='%23ffb74d' stroke-width='12'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%23050f1a'/%3E%3Ccircle cx='256' cy='256' r='180' fill='none' stroke='%23ffb74d' stroke-width='20'/%3E%3Cpath d='M180 200 L220 200 L220 320 L180 320 Z' fill='%23ffb74d'/%3E%3Cpath d='M292 200 L332 200 L332 320 L292 320 Z' fill='%23ffb74d'/%3E%3Cpath d='M236 170 L256 140 L276 170 L276 220 L236 220 Z' fill='%23ffb74d'/%3E%3Cpath d='M236 340 L256 370 L276 340 L276 290 L236 290 Z' fill='%23ffb74d'/%3E%3Ccircle cx='256' cy='256' r='40' fill='none' stroke='%23ffb74d' stroke-width='12'/%3E%3C/svg%3E">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="OratorJudge">
+  
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
@@ -166,6 +174,44 @@
     .btn-full { width: 100%; justify-content: center; }
     .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
+    /* ─── DOWNLOAD APP BUTTON ─── */
+    .download-app-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      background: rgba(255,255,255,0.05);
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition);
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .download-app-btn:hover {
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+      border-color: rgba(255,255,255,0.2);
+    }
+    .download-app-btn i {
+      font-size: 0.9rem;
+      color: var(--gold);
+    }
+    .download-app-btn .badge {
+      background: var(--gold);
+      color: #0a0c14;
+      font-size: 0.55rem;
+      font-weight: 700;
+      padding: 0.1rem 0.4rem;
+      border-radius: 100px;
+      margin-left: 0.2rem;
+    }
+
     /* ─── NOTIFICATIONS ─── */
     .notification-container {
       position: fixed;
@@ -266,14 +312,27 @@
       animation: slideUp 0.5s cubic-bezier(0.16,1,0.3,1) both;
     }
     .login-icon {
-      width: 64px; height: 64px;
+      width: 72px; height: 72px;
       background: var(--gold-dim);
       border: 1px solid var(--border-active);
       border-radius: 18px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.6rem;
+      font-size: 2rem;
       color: var(--gold);
       margin-bottom: 1.5rem;
+      position: relative;
+    }
+    .login-icon .app-version {
+      position: absolute;
+      bottom: -6px;
+      right: -6px;
+      background: var(--gold);
+      color: #0a0c14;
+      font-size: 0.5rem;
+      font-weight: 700;
+      padding: 0.1rem 0.4rem;
+      border-radius: 100px;
+      font-family: 'DM Sans', sans-serif;
     }
     .login-title { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em; }
     .login-sub { color: var(--muted); font-size: 0.85rem; margin-top: 0.3rem; margin-bottom: 2rem; }
@@ -997,9 +1056,24 @@
 
 <div id="loginScreen">
   <div class="card login-card">
-    <div class="login-icon"><i class="fas fa-microphone-alt"></i></div>
+    <div class="login-icon">
+      <i class="fas fa-microphone-alt"></i>
+      <span class="app-version">v2.0</span>
+    </div>
     <div class="login-title syne">OratorJudge Pro</div>
     <div class="login-sub">Professional speech evaluation platform</div>
+    
+    <!-- Download App Button -->
+    <div style="display:flex; gap:0.5rem; margin-bottom: 1.5rem; flex-wrap:wrap;">
+      <button class="download-app-btn" id="downloadAppBtn" style="flex:1; justify-content:center;">
+        <i class="fas fa-download"></i> Download App
+        <span class="badge">PWA</span>
+      </button>
+      <button class="download-app-btn" id="shareAppBtn" style="flex:1; justify-content:center;">
+        <i class="fas fa-share-alt"></i> Share
+      </button>
+    </div>
+    
     <div id="loginError" class="hidden"></div>
     
     <!-- Login Form -->
@@ -1147,6 +1221,93 @@ function removeNotification(notification) {
     }
   }, 300);
 }
+
+// ─── PWA / DOWNLOAD APP ───
+function installApp() {
+  // Check if the app can be installed via PWA
+  if (window.navigator && window.navigator.standalone) {
+    showNotification('📱 Already Installed', 'OratorJudge Pro is already running as an app.', 'info', 3000);
+    return;
+  }
+  
+  // Check if beforeinstallprompt is available
+  if (window.deferredPrompt) {
+    window.deferredPrompt.prompt();
+    window.deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        showNotification('✅ App Installed', 'OratorJudge Pro has been installed successfully!', 'success', 4000);
+      } else {
+        showNotification('⏭️ Installation Skipped', 'You can install the app later from the browser menu.', 'info', 3000);
+      }
+      window.deferredPrompt = null;
+    });
+    return;
+  }
+  
+  // Fallback: Show install instructions
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isAndroid = /Android/.test(navigator.userAgent);
+  
+  if (isIOS) {
+    showNotification('📱 Install on iOS', 'Tap the Share button and select "Add to Home Screen".', 'info', 5000);
+  } else if (isAndroid) {
+    showNotification('📱 Install on Android', 'Tap the menu (⋮) and select "Add to Home Screen" or "Install App".', 'info', 5000);
+  } else {
+    showNotification('📱 Install App', 'Use your browser\'s "Add to Home Screen" or "Install" feature.', 'info', 4000);
+  }
+}
+
+function shareApp() {
+  const shareData = {
+    title: 'OratorJudge Pro',
+    text: 'Professional speech evaluation platform for judges and speakers.',
+    url: window.location.href
+  };
+  
+  if (navigator.share) {
+    navigator.share(shareData).then(() => {
+      showNotification('✅ Shared', 'App link shared successfully!', 'success', 3000);
+    }).catch(() => {
+      // User cancelled or share failed
+    });
+  } else {
+    // Fallback: Copy link to clipboard
+    const url = window.location.href;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(() => {
+        showNotification('📋 Copied', 'App link copied to clipboard!', 'success', 3000);
+      });
+    } else {
+      // Fallback for older browsers
+      const textarea = document.createElement('textarea');
+      textarea.value = url;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      showNotification('📋 Copied', 'App link copied to clipboard!', 'success', 3000);
+    }
+  }
+}
+
+// ─── PWA INSTALL PROMPT ───
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  window.deferredPrompt = e;
+  // Update download button to show install option
+  const downloadBtn = document.getElementById('downloadAppBtn');
+  if (downloadBtn) {
+    downloadBtn.innerHTML = `<i class="fas fa-download"></i> Install App <span class="badge">PWA</span>`;
+  }
+});
+
+window.addEventListener('appinstalled', () => {
+  deferredPrompt = null;
+  window.deferredPrompt = null;
+  showNotification('🎉 App Installed', 'OratorJudge Pro is now installed on your device!', 'success', 4000);
+});
 
 // ─── DATABASE ───
 class AppDB {
@@ -1866,11 +2027,6 @@ function initApp() {
 
   updateTimerUI();
   renderAllPanels();
-
-  // ✅ FIX: Remove the resize event listener that was re-rendering the DOM and causing inputs to lose focus
-  // The old code had: window.addEventListener('resize', () => { renderAllPanels(); });
-  // This was the ROOT CAUSE of the keyboard issue on mobile!
-  // We now handle responsive changes only when the panel structure actually changes (login/logout)
 }
 
 // ─── POPULATE DISTRICT DROPDOWN ───
@@ -1882,6 +2038,12 @@ function populateDistrictDropdown() {
     select.innerHTML += `<option value="${d}">${d}</option>`;
   });
 }
+
+// ─── DOWNLOAD & SHARE BUTTONS ───
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('downloadAppBtn').addEventListener('click', installApp);
+  document.getElementById('shareAppBtn').addEventListener('click', shareApp);
+});
 
 // ─── AUTH TOGGLE ───
 document.getElementById('showSignupBtn').addEventListener('click', () => {

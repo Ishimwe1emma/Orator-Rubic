@@ -6,32 +6,18 @@
   <title>OratorJudge Pro</title>
   
   <!-- ─── PWA MANIFEST ─── -->
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIk9yYXRvckp1ZGdlIFBybyIsCiAgInNob3J0X25hbWUiOiAiT3JhdG9ySnVkZ2UiLAogICJkZXNjcmlwdGlvbiI6ICJQcm9mZXNzaW9uYWwgc3BlZWNoIGV2YWx1YXRpb24gcGxhdGZvcm0iLAogICJzdGFydF91cmwiOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzA1MDcwZiIsCiAgInRoZW1lX2NvbG9yIjogIiMwNTA3MGYiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWwsJTNDc3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgdmlld0JveD0nMCAwIDUxMiA1MTInJTNFJTNDcmVjdCB3aWR0aD0nNTEyJyBoZWlnaHQ9JzUxMicgcng9JzEwMCcgZmlsbD0nJTA1MDcwZicvJTNFJTNDY2lyY2xlIGN4PScyNTYnIGN5PScyNTYnIHI9JzE4MCcgZmlsbD0nbm9uZScgc3Ryb2tlPSclMjNmZmI3NGQnIHN0cm9rZS13aWR0aD0nMjAnLyUzRSUzQ3BhdGggZD0nTTE4MCAyMDAgTDIyMCAyMDAgTDIyMCAzMjAgTDE4MCAzMjAgWicgZmlsbD0nJTIzZmZiNzRkJy8lM0UlM0NwYXRoIGQ9J00yOTIgMjAwIEwzMzIgMjAwIEwzMzIgMzIwIEwyOTIgMzIwIFonIGZpbGw9JyUyM2ZmYjc0ZCcvJTNFJTNDcGF0aCBkPSdNMjM2IDE3MCBMMjU2IDE0MCBMMjc2IDE3MCBMMjc2IDIyMCBMMjM2IDIyMCBaJyBmaWxsPSclMjNmZmI3NGQnLyUzRSUzQ3BhdGggZD0nTTIzNiAzNDAgTDI1NiAzNzAgTDI3NiAzNDAgTDI3NiAyOTAgTDIzNiAyOTAgWicgZmlsbD0nJTIzZmZiNzRkJy8lM0UlM0NjaXJjbGUgY3g9JzI1NicgY3k9JzI1Nicgcj0nNDAnIGZpbGw9J25vbmUnIHN0cm9rZT0nJTIzZmZiNzRkJyBzdHJva2Utd2lkdGg9JzEyJy8lM0UlM0Mvc3ZnJTNFIgogICAgfQogIF0KfQ==">
   
   <!-- ─── APP ICONS ─── -->
-  <link rel="icon" type="image/png" href="icon.png">
-  <link rel="apple-touch-icon" href="icon.png">
-  
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%23050f1a'/%3E%3Ccircle cx='256' cy='256' r='180' fill='none' stroke='%23ffb74d' stroke-width='20'/%3E%3Cpath d='M180 200 L220 200 L220 320 L180 320 Z' fill='%23ffb74d'/%3E%3Cpath d='M292 200 L332 200 L332 320 L292 320 Z' fill='%23ffb74d'/%3E%3Cpath d='M236 170 L256 140 L276 170 L276 220 L236 220 Z' fill='%23ffb74d'/%3E%3Cpath d='M236 340 L256 370 L276 340 L276 290 L236 290 Z' fill='%23ffb74d'/%3E%3Ccircle cx='256' cy='256' r='40' fill='none' stroke='%23ffb74d' stroke-width='12'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%23050f1a'/%3E%3Ccircle cx='256' cy='256' r='180' fill='none' stroke='%23ffb74d' stroke-width='20'/%3E%3Cpath d='M180 200 L220 200 L220 320 L180 320 Z' fill='%23ffb74d'/%3E%3Cpath d='M292 200 L332 200 L332 320 L292 320 Z' fill='%23ffb74d'/%3E%3Cpath d='M236 170 L256 140 L276 170 L276 220 L236 220 Z' fill='%23ffb74d'/%3E%3Cpath d='M236 340 L256 370 L276 340 L276 290 L236 290 Z' fill='%23ffb74d'/%3E%3Ccircle cx='256' cy='256' r='40' fill='none' stroke='%23ffb74d' stroke-width='12'/%3E%3C/svg%3E">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="OratorJudge">
-  <meta name="theme-color" content="#05070f">
-  <meta name="msapplication-TileColor" content="#05070f">
-  
-  <!-- ─── SERVICE WORKER ─── -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
-        .then(() => console.log('✅ Service Worker registered'))
-        .catch(() => console.log('❌ Service Worker registration failed'));
-    }
-  </script>
   
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  
   <style>
-    /* ─── YOUR FULL CSS HERE (same as before) ─── */
     :root {
       --bg: #05070f;
       --bg2: #0c0f1e;
@@ -191,6 +177,7 @@
     .btn-full { width: 100%; justify-content: center; }
     .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
+    /* ─── DOWNLOAD APP BUTTON ─── */
     .download-app-btn {
       display: inline-flex;
       align-items: center;
@@ -228,6 +215,7 @@
       margin-left: 0.2rem;
     }
 
+    /* ─── NOTIFICATIONS ─── */
     .notification-container {
       position: fixed;
       top: 1rem;
@@ -312,6 +300,7 @@
       animation: slideOutRight 0.3s cubic-bezier(0.16,1,0.3,1) forwards;
     }
 
+    /* ─── LOGIN SCREEN ─── */
     #loginScreen {
       min-height: 100dvh;
       display: flex;
@@ -377,47 +366,7 @@
       75% { transform: translateX(6px); }
     }
 
-    .download-instructions {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 0.8rem 1rem;
-      margin-top: 0.5rem;
-      display: none;
-    }
-    .download-instructions.active {
-      display: block;
-      animation: slideDown 0.3s ease;
-    }
-    .download-instructions h4 {
-      color: var(--gold);
-      font-size: 0.8rem;
-      margin-bottom: 0.3rem;
-    }
-    .download-instructions p {
-      font-size: 0.75rem;
-      color: var(--muted);
-      line-height: 1.5;
-      margin-bottom: 0.3rem;
-    }
-    .download-instructions .step {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.72rem;
-      color: var(--muted);
-      padding: 0.2rem 0;
-    }
-    .download-instructions .step i {
-      color: var(--gold);
-      width: 16px;
-      text-align: center;
-    }
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
+    /* ─── TOP BAR ─── */
     #topbar {
       position: sticky; top: 0; z-index: 100;
       background: rgba(5,7,15,0.85);
@@ -481,6 +430,7 @@
       font-weight: 600;
     }
 
+    /* ─── COUNTDOWN TIMER ─── */
     .timer-wrap {
       display: flex;
       flex-direction: column;
@@ -579,10 +529,12 @@
     }
     .timer-wrap.ended .timer-display { color: #ff5d5d; }
 
+    /* ─── MAIN LAYOUT ─── */
     #mainScreen { padding-bottom: 5rem; animation: fadeIn 0.4s ease; }
     @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
     @keyframes slideUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
 
+    /* ─── MOBILE NAV TABS ─── */
     .mobile-nav {
       position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
       background: rgba(11,14,25,0.95);
@@ -618,6 +570,7 @@
     .mnav-btn.has-dot { position: relative; }
     .mnav-btn.has-dot .dot { display: block; }
 
+    /* ─── DESKTOP NAV ─── */
     .desktop-tabs {
       display: none;
       gap: 0.4rem;
@@ -637,21 +590,25 @@
     }
     .dtab.active { background: var(--gold-dim); border-color: var(--border-active); color: var(--gold2); }
 
+    /* ─── PANELS ─── */
     .panel { padding: 1.25rem; display: none; }
     .panel.active { display: block; animation: panelIn 0.3s cubic-bezier(0.16,1,0.3,1); }
     @keyframes panelIn { from { opacity:0; transform:translateX(10px); } to { opacity:1; transform:translateX(0); } }
 
+    /* ─── CANDIDATE PANEL ─── */
     .candidate-header { margin-bottom: 1.25rem; }
     .candidate-header h2 { font-size: 1.15rem; font-weight: 800; }
     .candidate-header p { color: var(--muted); font-size: 0.82rem; margin-top: 0.2rem; }
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 
+    /* ─── RUBRIC PANEL ─── */
     .rubric-container {
       display: flex;
       flex-direction: column;
       height: 100%;
       min-height: 500px;
     }
+
     .rubric-header { 
       display: flex; 
       align-items: center; 
@@ -662,6 +619,7 @@
       flex-shrink: 0;
     }
     .rubric-header h2 { font-size: 1.15rem; font-weight: 800; }
+    
     .rubric-sticky {
       position: sticky;
       top: 0;
@@ -670,6 +628,7 @@
       padding: 0.25rem 0 0.75rem 0;
       flex-shrink: 0;
     }
+
     .progress-wrap {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -806,6 +765,7 @@
     }
     .criteria-item .field textarea { background: var(--bg); }
 
+    /* ─── ACTION BAR ─── */
     .action-bar {
       display: flex;
       gap: 0.6rem;
@@ -816,6 +776,7 @@
     }
     .action-bar .btn { flex: 1; }
 
+    /* ─── ARCHIVE PANEL ─── */
     .archive-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
     .archive-header h2 { font-size: 1.15rem; font-weight: 800; }
     .venue-selector {
@@ -897,6 +858,7 @@
     .empty-icon { font-size: 2.5rem; color: var(--muted); opacity: 0.4; margin-bottom: 0.8rem; }
     .empty-state p { color: var(--muted); font-size: 0.85rem; }
 
+    /* ─── LEADERBOARD ─── */
     .lb-section { margin-bottom: 1.5rem; }
     .lb-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.4rem; }
     .lb-title i { color: var(--gold); }
@@ -921,6 +883,7 @@
     .lb-name { flex: 1; font-size: 0.88rem; font-weight: 600; }
     .lb-score { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.88rem; color: var(--gold2); }
 
+    /* ─── MODAL ─── */
     .modal-overlay {
       position: fixed; inset: 0; z-index: 200;
       background: rgba(0,0,0,0.75);
@@ -987,8 +950,10 @@
       margin-top: 0.5rem;
     }
 
+    /* ─── PRINT REPORT ─── */
     #printArea { display: none; }
 
+    /* ─── RESPONSIVE ─── */
     @media (min-width: 768px) {
       .mobile-nav { display: none; }
       #mainScreen { padding-bottom: 2rem; }
@@ -1019,11 +984,13 @@
       .criteria-scroll { max-height: 550px; }
     }
 
+    /* ─── SCROLL ─── */
     ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 100px; }
     ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
 
+    /* ─── PRINT STYLES ─── */
     @media print {
       body * { visibility: hidden; }
       #printArea, #printArea * { visibility: visible; }
@@ -1051,6 +1018,7 @@
       @page { margin: 1.2cm; }
     }
 
+    /* ─── MOBILE TOPBAR COMPACT ─── */
     @media (max-width: 480px) {
       #topbar { padding: 0.6rem 0.8rem; gap: 0.4rem; }
       .topbar-logo { font-size: 0.9rem; }
@@ -1069,13 +1037,17 @@
       .venue-selector select { max-width: 100%; }
       .notification-container { top: 0.5rem; right: 0.5rem; max-width: calc(100% - 1rem); }
       .criteria-scroll { max-height: 300px; }
+      
+      /* Mobile: Show download button, hide on desktop */
       .download-app-btn.hide-on-mobile { display: none !important; }
     }
 
+    /* Desktop: Hide download button */
     @media (min-width: 481px) {
       .download-app-btn.hide-on-desktop { display: none !important; }
     }
 
+    /* ─── MOBILE INPUT FIX ─── */
     input, textarea, select {
       -webkit-user-select: text !important;
       user-select: text !important;
@@ -1083,15 +1055,11 @@
       -webkit-touch-callout: default !important;
     }
 
+    /* Ensure inputs are clickable */
     .field input, .field textarea, .field select {
       position: relative;
       z-index: 5;
       pointer-events: auto !important;
-    }
-
-    @media (display-mode: standalone) {
-      body { background: var(--bg); }
-      #topbar { padding-top: env(safe-area-inset-top); }
     }
   </style>
 </head>
@@ -1106,32 +1074,22 @@
     <div class="login-title syne">OratorJudge Pro</div>
     <div class="login-sub">Professional speech evaluation platform</div>
     
-    <div style="display:flex; gap:0.5rem; margin-bottom: 0.5rem; flex-wrap:wrap;">
-      <button class="download-app-btn hide-on-desktop" id="downloadApkBtn" style="flex:1; justify-content:center;">
-        <i class="fas fa-download"></i> Download APK
-        <span class="badge">v2.0</span>
+    <!-- Download & Share Buttons -->
+    <div style="display:flex; gap:0.5rem; margin-bottom: 1.5rem; flex-wrap:wrap;">
+      <!-- Download App - Visible only on mobile -->
+      <button class="download-app-btn hide-on-desktop" id="downloadAppBtn" style="flex:1; justify-content:center;">
+        <i class="fas fa-download"></i> Install App
+        <span class="badge">PWA</span>
       </button>
+      <!-- Share Button - Visible on both mobile and desktop -->
       <button class="download-app-btn" id="shareAppBtn" style="flex:1; justify-content:center;">
         <i class="fas fa-share-alt"></i> Share
       </button>
     </div>
     
-    <div class="download-instructions" id="downloadInstructions">
-      <h4><i class="fas fa-info-circle" style="color:var(--gold);"></i> How to install the APK</h4>
-      <div class="step"><i class="fas fa-1"></i> Tap the <strong style="color:var(--text);">Download APK</strong> button above</div>
-      <div class="step"><i class="fas fa-2"></i> Wait for the download to complete</div>
-      <div class="step"><i class="fas fa-3"></i> Open your device's <strong style="color:var(--text);">Downloads</strong> folder</div>
-      <div class="step"><i class="fas fa-4"></i> Tap the <strong style="color:var(--text);">OratorJudge.apk</strong> file</div>
-      <div class="step"><i class="fas fa-5"></i> If prompted, enable <strong style="color:var(--text);">"Install from unknown sources"</strong></div>
-      <div class="step"><i class="fas fa-6"></i> Tap <strong style="color:var(--text);">Install</strong> and wait for completion</div>
-      <div class="step"><i class="fas fa-7"></i> Tap <strong style="color:var(--text);">Open</strong> to launch the app</div>
-      <p style="margin-top:0.3rem;color:var(--gold);font-size:0.7rem;">
-        <i class="fas fa-shield-alt"></i> The app is safe and does not require any special permissions.
-      </p>
-    </div>
-    
     <div id="loginError" class="hidden"></div>
     
+    <!-- Login Form -->
     <div id="loginForm">
       <div class="field"><label>Username</label><input type="text" id="loginUsername" placeholder="Enter username" autocomplete="username" inputmode="text"></div>
       <div class="field"><label>Password</label><input type="password" id="loginPassword" placeholder="Enter password" autocomplete="current-password"></div>
@@ -1139,6 +1097,7 @@
       <div class="auth-toggle">Don't have an account? <strong id="showSignupBtn">Create one</strong></div>
     </div>
 
+    <!-- Signup Form -->
     <div id="signupForm" class="hidden">
       <div class="field"><label>Username</label><input type="text" id="regUser" placeholder="Choose username" inputmode="text"></div>
       <div class="field"><label>Password</label><input type="password" id="regPass" placeholder="Choose password"></div>
@@ -1158,6 +1117,7 @@
     <div class="topbar-logo syne">Orator<span>Judge</span><span class="admin-badge hidden" id="adminBadge">Admin</span></div>
     <div class="score-pill" id="topbarScore">⭐ 0 / 50</div>
 
+    <!-- Countdown Timer -->
     <div class="timer-wrap" id="timerWrap">
       <div class="click-area" id="timerClickArea"></div>
       <div class="timer-content">
@@ -1205,17 +1165,12 @@
   </nav>
 </div>
 
+<!-- Notification Container -->
 <div class="notification-container" id="notificationContainer"></div>
+
 <div id="printArea"></div>
 
 <script>
-// ─── SERVICE WORKER ───
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js')
-    .then(() => console.log('✅ Service Worker registered'))
-    .catch(() => console.log('❌ Service Worker registration failed'));
-}
-
 // ─── RWANDAN DISTRICTS ───
 const RWANDAN_DISTRICTS = [
   'Bugesera', 'Burera', 'Gakenke', 'Gasabo', 'Gatsibo', 'Gicumbi', 
@@ -1280,17 +1235,46 @@ function removeNotification(notification) {
   }, 300);
 }
 
-// ─── DOWNLOAD APK ───
-function downloadApk() {
-  const instructions = document.getElementById('downloadInstructions');
-  instructions.classList.add('active');
-  showNotification('📥 Download Started', 'Your APK download is starting. Check your Downloads folder.', 'info', 4000);
-  setTimeout(() => {
-    showNotification('✅ Download Complete', 'OratorJudge.apk has been downloaded to your device.', 'success', 5000);
-  }, 3000);
+// ─── DETECT DEVICE TYPE ───
+function isMobileDevice() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
 }
 
-// ─── SHARE APP ───
+// ─── PWA / DOWNLOAD APP ───
+function installApp() {
+  // Check if already installed as standalone app
+  if (window.navigator && window.navigator.standalone) {
+    showNotification('📱 Already Installed', 'OratorJudge Pro is already running as an app.', 'info', 3000);
+    return;
+  }
+  
+  // Check if beforeinstallprompt is available (Chrome Android)
+  if (window.deferredPrompt) {
+    window.deferredPrompt.prompt();
+    window.deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        showNotification('✅ App Installed', 'OratorJudge Pro has been installed successfully!', 'success', 4000);
+      } else {
+        showNotification('⏭️ Installation Skipped', 'You can install the app later from the browser menu.', 'info', 3000);
+      }
+      window.deferredPrompt = null;
+    });
+    return;
+  }
+  
+  // For iOS - show instructions
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isAndroid = /Android/.test(navigator.userAgent);
+  
+  if (isIOS) {
+    showNotification('📱 Install on iOS', 'Tap the Share button (square with arrow) and select "Add to Home Screen".', 'info', 5000);
+  } else if (isAndroid) {
+    showNotification('📱 Install on Android', 'Tap the menu (⋮) and select "Add to Home Screen" or "Install App".', 'info', 5000);
+  } else {
+    showNotification('📱 Install App', 'Use your browser\'s "Add to Home Screen" or "Install" feature.', 'info', 4000);
+  }
+}
+
 function shareApp() {
   const shareData = {
     title: 'OratorJudge Pro',
@@ -1302,17 +1286,20 @@ function shareApp() {
     navigator.share(shareData).then(() => {
       showNotification('✅ Shared', 'App link shared successfully!', 'success', 3000);
     }).catch((err) => {
+      // User cancelled or share failed - don't show error
       if (err.name !== 'AbortError') {
         console.log('Share cancelled or failed');
       }
     });
   } else {
+    // Fallback: Copy link to clipboard
     const url = window.location.href;
     if (navigator.clipboard) {
       navigator.clipboard.writeText(url).then(() => {
         showNotification('📋 Copied', 'App link copied to clipboard!', 'success', 3000);
       });
     } else {
+      // Fallback for older browsers
       const textarea = document.createElement('textarea');
       textarea.value = url;
       textarea.style.position = 'fixed';
@@ -1329,6 +1316,25 @@ function shareApp() {
     }
   }
 }
+
+// ─── PWA INSTALL PROMPT ───
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  window.deferredPrompt = e;
+  // Update download button text
+  const downloadBtn = document.getElementById('downloadAppBtn');
+  if (downloadBtn) {
+    downloadBtn.innerHTML = `<i class="fas fa-download"></i> Install App <span class="badge">PWA</span>`;
+  }
+});
+
+window.addEventListener('appinstalled', () => {
+  deferredPrompt = null;
+  window.deferredPrompt = null;
+  showNotification('🎉 App Installed', 'OratorJudge Pro is now installed on your device!', 'success', 4000);
+});
 
 // ─── DATABASE ───
 class AppDB {
@@ -1348,12 +1354,16 @@ class AppDB {
   }
   
   users() { return JSON.parse(localStorage.getItem('oj_users')); }
+  
   auth(u, p) {
     const users = this.users();
     const user = users.find(x => x.u === u && x.p === p);
-    if (user) { return { ...user }; }
+    if (user) {
+      return { ...user };
+    }
     return null;
   }
+  
   register(u, p, district) {
     const us = this.users();
     if (us.find(x => x.u === u)) return false;
@@ -1361,8 +1371,15 @@ class AppDB {
     localStorage.setItem('oj_users', JSON.stringify(us));
     return true;
   }
+  
   reports() { return JSON.parse(localStorage.getItem('oj_reports')); }
-  save(r) { const rs = this.reports(); rs.push(r); localStorage.setItem('oj_reports', JSON.stringify(rs)); }
+  
+  save(r) { 
+    const rs = this.reports(); 
+    rs.push(r); 
+    localStorage.setItem('oj_reports', JSON.stringify(rs)); 
+  }
+  
   update(idx, r) {
     const rs = this.reports();
     if (idx >= 0 && idx < rs.length) {
@@ -1372,7 +1389,13 @@ class AppDB {
     }
     return false;
   }
-  delete(i) { const rs = this.reports(); rs.splice(i, 1); localStorage.setItem('oj_reports', JSON.stringify(rs)); }
+  
+  delete(i) { 
+    const rs = this.reports(); 
+    rs.splice(i, 1); 
+    localStorage.setItem('oj_reports', JSON.stringify(rs)); 
+  }
+  
   venues() { return JSON.parse(localStorage.getItem('oj_venues')); }
 }
 
@@ -1515,7 +1538,7 @@ function renderScoreArc() {
   });
 }
 
-// ─── COLLECT CANDIDATE ───
+// ─── COLLECT CANDIDATE FROM DOM ───
 function collectCandidate() {
   ['cName','cSchool','cLevel','cTheme','cTitle','cVenue'].forEach(id => {
     const el = document.querySelector(`#${id}`);
@@ -1525,6 +1548,7 @@ function collectCandidate() {
   });
 }
 
+// ─── CHECK IF ALL FIELDS ARE FILLED ───
 function allFieldsFilled() {
   collectCandidate();
   return candidate.name.trim() !== '' && 
@@ -1534,6 +1558,7 @@ function allFieldsFilled() {
          candidate.venue.trim() !== '';
 }
 
+// ─── UPDATE SAVE BUTTON STATE ───
 function updateSaveButton() {
   const saveBtns = document.querySelectorAll('#rSaveBtn, #cSaveBtn');
   const filled = allFieldsFilled();
@@ -1542,6 +1567,7 @@ function updateSaveButton() {
   });
 }
 
+// ─── RESET ALL ───
 function resetAll() {
   if (!confirm('Reset all candidate info, scores and comments? This cannot be undone.')) return;
   scores = {}; comments = {}; initScores();
@@ -1551,6 +1577,7 @@ function resetAll() {
   showNotification('🔄 Reset Complete', 'All data cleared — ready for next speaker.', 'info', 3000);
 }
 
+// ─── SAVE / UPDATE ───
 function saveEvaluation() {
   collectCandidate();
   if (!allFieldsFilled()) { 
@@ -1590,6 +1617,7 @@ function saveEvaluation() {
   renderAllPanels();
 }
 
+// ─── CANDIDATE PANEL ───
 function renderCandidatePanel(container) {
   const venues = db.venues();
   const availableVenues = isAdmin ? venues : [currentUserDistrict];
@@ -1630,6 +1658,7 @@ function renderCandidatePanel(container) {
   if (levelEl) levelEl.addEventListener('change', updateSaveButton);
 }
 
+// ─── RUBRIC PANEL ───
 function renderRubricPanel(container) {
   const tot = total();
   const r = 28, cx = 36, cy = 36, circ = 2 * Math.PI * r;
@@ -1728,6 +1757,7 @@ function renderRubricPanel(container) {
   container.querySelector('#rResetBtn').addEventListener('click', resetAll);
 }
 
+// ─── ARCHIVE PANEL ───
 function renderArchivePanel(container) {
   const reports = db.reports();
   const venues = db.venues();
@@ -1820,6 +1850,7 @@ function renderArchivePanel(container) {
   }));
 }
 
+// ─── EDIT REPORT ───
 function editReport(idx) {
   const reports = db.reports();
   const r = reports[idx];
@@ -1848,6 +1879,7 @@ function editReport(idx) {
   switchPanel('candidate');
 }
 
+// ─── RENDER ───
 function renderAllPanels() {
   const isWide = window.innerWidth >= 1024;
   const desktopLayout = document.getElementById('desktopLayout');
@@ -1879,6 +1911,7 @@ function switchPanel(tab) {
   });
 }
 
+// ─── PRINT / PDF ───
 function buildPrintHtml(r) {
   const tot = r.totalScore;
   const perf = tot >= 45 ? 'Exceptional' : tot >= 33 ? 'Solid Performance' : 'Needs Improvement';
@@ -1908,13 +1941,13 @@ function buildPrintHtml(r) {
     </table>
     <div class="pr-footer">OratorJudge Pro · Professional Speech Evaluation Platform</div>`;
 }
-
 function printReport(idx) {
   const r = db.reports()[idx]; if (!r) return;
   document.getElementById('printArea').innerHTML = buildPrintHtml(r);
   setTimeout(() => window.print(), 50);
 }
 
+// ─── REPORT MODAL ───
 function showReport(idx) {
   const r = db.reports()[idx]; if (!r) return;
   const tot = r.totalScore;
@@ -1956,6 +1989,7 @@ function showReport(idx) {
   overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
 }
 
+// ─── APP INIT ───
 function initApp() {
   document.getElementById('topbarUser').textContent = currentUser;
   document.getElementById('userAvatar').textContent = currentUser[0].toUpperCase();
@@ -1968,6 +2002,7 @@ function initApp() {
   document.querySelectorAll('.mnav-btn').forEach(btn => btn.addEventListener('click', () => switchPanel(btn.dataset.panel)));
   document.querySelectorAll('.dtab').forEach(btn     => btn.addEventListener('click', () => switchPanel(btn.dataset.panel)));
 
+  // Logout
   const logoutBtn = document.getElementById('logoutBtn');
   const newLogoutBtn = logoutBtn.cloneNode(true);
   logoutBtn.parentNode.replaceChild(newLogoutBtn, logoutBtn);
@@ -1994,6 +2029,7 @@ function initApp() {
     showNotification('👋 Logged Out', 'You have been signed out successfully.', 'info', 3000);
   });
 
+  // Timer
   const timerClickArea = document.getElementById('timerClickArea');
   const timerStartBtn = document.getElementById('timerStartBtn');
   const timerResetBtn = document.getElementById('timerResetBtn');
@@ -2020,6 +2056,7 @@ function initApp() {
   renderAllPanels();
 }
 
+// ─── POPULATE DISTRICT DROPDOWN ───
 function populateDistrictDropdown() {
   const select = document.getElementById('regDistrict');
   if (!select) return;
@@ -2029,25 +2066,13 @@ function populateDistrictDropdown() {
   });
 }
 
+// ─── DOWNLOAD & SHARE BUTTONS ───
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('downloadApkBtn').addEventListener('click', downloadApk);
+  document.getElementById('downloadAppBtn').addEventListener('click', installApp);
   document.getElementById('shareAppBtn').addEventListener('click', shareApp);
-  
-  const downloadBtn = document.getElementById('downloadApkBtn');
-  let instructionsShown = false;
-  downloadBtn.addEventListener('click', () => {
-    if (!instructionsShown) {
-      const instructions = document.getElementById('downloadInstructions');
-      instructions.classList.add('active');
-      instructionsShown = true;
-      setTimeout(() => {
-        instructions.classList.remove('active');
-        instructionsShown = false;
-      }, 8000);
-    }
-  });
 });
 
+// ─── AUTH TOGGLE ───
 document.getElementById('showSignupBtn').addEventListener('click', () => {
   document.getElementById('loginForm').classList.add('hidden');
   document.getElementById('signupForm').classList.remove('hidden');
@@ -2061,6 +2086,7 @@ document.getElementById('showLoginBtn').addEventListener('click', () => {
   document.getElementById('loginError').className = 'hidden';
 });
 
+// ─── LOGIN ───
 document.getElementById('loginBtn').addEventListener('click', () => {
   const u = document.getElementById('loginUsername').value.trim();
   const p = document.getElementById('loginPassword').value.trim();
@@ -2103,6 +2129,7 @@ document.getElementById('loginPassword').addEventListener('keydown', (e) => {
   if (e.key === 'Enter') document.getElementById('loginBtn').click(); 
 });
 
+// ─── SIGNUP ───
 document.getElementById('doRegBtn').addEventListener('click', () => {
   const u = document.getElementById('regUser').value.trim();
   const p = document.getElementById('regPass').value.trim();
@@ -2134,8 +2161,10 @@ document.getElementById('regPass').addEventListener('keydown', (e) => {
   if (e.key === 'Enter') document.getElementById('doRegBtn').click(); 
 });
 
+// Initialize district dropdown on page load
 populateDistrictDropdown();
 
+// ─── WELCOME NOTIFICATION ───
 setTimeout(() => {
   showNotification('🎯 Welcome to OratorJudge Pro', 
     'Admin: iDebate / Rwanda | Regular: judge1 / judge123', 

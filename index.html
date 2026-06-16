@@ -95,6 +95,8 @@
       font-size: 0.9rem;
       transition: border-color var(--transition), box-shadow var(--transition);
       -webkit-appearance: none;
+      -webkit-user-select: text;
+      user-select: text;
     }
     .field input:focus, .field select:focus, .field textarea:focus {
       outline: none;
@@ -125,6 +127,7 @@
       transition: all var(--transition);
       white-space: nowrap;
       letter-spacing: 0.02em;
+      -webkit-tap-highlight-color: transparent;
     }
     .btn-primary {
       background: linear-gradient(135deg, var(--gold) 0%, #ff9f1c 100%);
@@ -372,6 +375,7 @@
       cursor: pointer;
       position: relative;
       flex-shrink: 0;
+      -webkit-tap-highlight-color: transparent;
     }
     .timer-wrap:hover { border-color: rgba(255,255,255,0.15); }
     .timer-label {
@@ -400,11 +404,13 @@
     .timer-ctrl-btn {
       width: 18px; height: 18px;
       background: rgba(255,255,255,0.06);
-      border: none; border-radius: 4px;
+      border: none;
+      border-radius: 4px;
       color: var(--muted); font-size: 0.55rem;
       cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       transition: background var(--transition), color var(--transition);
+      -webkit-tap-highlight-color: transparent;
     }
     .timer-ctrl-btn:hover { background: rgba(255,255,255,0.12); color: var(--text); }
 
@@ -448,6 +454,7 @@
       color: var(--muted); font-size: 0.65rem; font-family: 'DM Sans', sans-serif; font-weight: 600;
       border-radius: var(--radius-sm);
       transition: color var(--transition), background var(--transition);
+      -webkit-tap-highlight-color: transparent;
     }
     .mnav-btn i { font-size: 1.1rem; }
     .mnav-btn.active { color: var(--gold); background: var(--gold-dim); }
@@ -476,6 +483,7 @@
       font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.82rem;
       color: var(--muted); cursor: pointer;
       transition: all var(--transition);
+      -webkit-tap-highlight-color: transparent;
     }
     .dtab.active { background: var(--gold-dim); border-color: var(--border-active); color: var(--gold2); }
 
@@ -529,6 +537,7 @@
     .criteria-header {
       display: flex; align-items: center; justify-content: space-between;
       padding: 0.85rem 1rem; cursor: pointer; gap: 0.75rem;
+      -webkit-tap-highlight-color: transparent;
     }
     .criteria-name { font-weight: 600; font-size: 0.88rem; flex: 1; }
     .criteria-score-badge {
@@ -569,6 +578,7 @@
       color: var(--muted); font-size: 1rem; font-weight: 700;
       transition: background var(--transition), color var(--transition);
       display: flex; align-items: center; justify-content: center;
+      -webkit-tap-highlight-color: transparent;
     }
     .stepper-btn:hover { background: rgba(255,255,255,0.07); color: var(--text); }
     .stepper-btn:active { background: rgba(255,255,255,0.12); }
@@ -629,6 +639,7 @@
       font-size: 0.78rem; font-weight: 600; cursor: pointer;
       font-family: 'Syne', sans-serif;
       transition: all var(--transition);
+      -webkit-tap-highlight-color: transparent;
     }
     .stab.active { background: var(--gold-dim); border-color: var(--border-active); color: var(--gold2); }
 
@@ -719,6 +730,7 @@
       background: var(--surface); border: 1px solid var(--border);
       cursor: pointer; display: flex; align-items: center; justify-content: center;
       color: var(--muted); transition: all var(--transition);
+      -webkit-tap-highlight-color: transparent;
     }
     .modal-close:hover { color: var(--text); }
     .report-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 1rem; }
@@ -840,6 +852,13 @@
       .venue-selector select { max-width: 100%; }
       .notification-container { top: 0.5rem; right: 0.5rem; max-width: calc(100% - 1rem); }
     }
+
+    /* Fix for mobile input focus issues */
+    input, textarea, select {
+      -webkit-user-select: text !important;
+      user-select: text !important;
+      touch-action: manipulation !important;
+    }
   </style>
 </head>
 <body>
@@ -945,8 +964,6 @@ const ADMIN_USER = 'iDebate';
 const ADMIN_PASS = 'Rwanda';
 
 // ─── NOTIFICATION SYSTEM ───
-let notificationTimeout = null;
-
 function showNotification(title, message, type = 'info', duration = 4000) {
   const container = document.getElementById('notificationContainer');
   if (!container) return;
@@ -999,7 +1016,6 @@ function removeNotification(notification) {
 // ─── DATABASE ───
 class AppDB {
   constructor() {
-    // Initialize users with admin and default judge
     const defaultUsers = [
       { u: 'iDebate', p: 'Rwanda', district: 'All Districts', isAdmin: true },
       { u: 'judge1', p: 'judge123', district: 'Gasabo', isAdmin: false }
@@ -1265,14 +1281,12 @@ function saveEvaluation() {
   };
   
   if (editingIndex !== null) {
-    // Update existing report
     const success = db.update(editingIndex, reportData);
     if (success) {
       showNotification('✅ Report Updated', `${candidate.name} · ${tot}/50 at ${candidate.venue}`, 'success', 4000);
       editingIndex = null;
     }
   } else {
-    // Save new report
     db.save(reportData);
     showNotification('✅ Evaluation Saved', `${candidate.name} · ${tot}/50 at ${candidate.venue}`, 'success', 4000);
   }
@@ -1283,7 +1297,6 @@ function saveEvaluation() {
 // ─── CANDIDATE PANEL ───
 function renderCandidatePanel(container) {
   const venues = db.venues();
-  // For non-admin users, only show their district
   const availableVenues = isAdmin ? venues : [currentUserDistrict];
   const venueOptions = availableVenues.map(v => `<option value="${esc(v)}" ${candidate.venue===v?'selected':''}>${esc(v)}</option>`).join('');
   
@@ -1311,7 +1324,6 @@ function renderCandidatePanel(container) {
       ${editingIndex !== null ? `<div style="margin-top:0.5rem;font-size:0.75rem;color:var(--gold);"><i class="fas fa-pen"></i> Editing report #${editingIndex + 1}</div>` : ''}
     </div>`;
 
-  // Add event listeners to update save button state
   ['cName','cSchool','cTheme','cTitle','cVenue'].forEach(id => {
     const el = container.querySelector(`#${id}`);
     if (el) el.addEventListener('input', updateSaveButton);
@@ -1419,13 +1431,10 @@ function renderArchivePanel(container) {
   const archiveDot = document.getElementById('archiveDot');
   if (archiveDot) archiveDot.style.display = reports.length > 0 ? 'block' : 'none';
 
-  // Filter reports based on user role
   let filteredReports = reports;
   if (!isAdmin) {
-    // Non-admin users only see their district
     filteredReports = reports.filter(r => r.venue === currentUserDistrict);
   } else {
-    // Admin can filter by selected venue
     filteredReports = reports.filter(r => r.venue === currentVenue);
   }
 
@@ -1456,7 +1465,6 @@ function renderArchivePanel(container) {
   const lbItem = (p,i) => `<div class="lb-item"><div class="lb-rank ${medals[i]||''}">${i+1}</div><div class="lb-name">${esc(p.candidateName)}</div><div class="lb-score">${p.totalScore}/50</div></div>`;
   const lbSec  = (title, icon, arr) => `<div class="lb-section"><div class="lb-title"><i class="fas fa-${icon}"></i> ${title}</div>${arr.length ? arr.map(lbItem).join('') : '<p class="text-muted text-sm" style="padding:0.4rem 0;">No entries yet</p>'}</div>`;
 
-  // Venue selector - only show for admin
   const venueSelectorHtml = isAdmin ? `
     <div class="venue-selector">
       <label><i class="fas fa-map-pin"></i> District</label>
@@ -1515,13 +1523,11 @@ function editReport(idx) {
   const r = reports[idx];
   if (!r) return;
   
-  // Check if user can edit this report
   if (!isAdmin && r.judge !== currentUser) {
     showNotification('⛔ Access Denied', 'You can only edit your own evaluations.', 'error', 3000);
     return;
   }
   
-  // Load data into editing state
   editingIndex = idx;
   candidate = {
     name: r.candidateName || '',
@@ -1535,11 +1541,8 @@ function editReport(idx) {
   comments = { ...r.comments };
   currentVenue = r.venue || currentUserDistrict;
   
-  // Update the rubric display
   renderAllPanels();
   showNotification('✏️ Edit Mode', `Editing evaluation for ${r.candidateName}`, 'info', 3000);
-  
-  // Switch to candidate tab
   switchPanel('candidate');
 }
 
@@ -1666,13 +1669,12 @@ function initApp() {
   document.querySelectorAll('.mnav-btn').forEach(btn => btn.addEventListener('click', () => switchPanel(btn.dataset.panel)));
   document.querySelectorAll('.dtab').forEach(btn     => btn.addEventListener('click', () => switchPanel(btn.dataset.panel)));
 
-  // Remove existing logout event listeners to prevent duplicates
+  // Logout
   const logoutBtn = document.getElementById('logoutBtn');
   const newLogoutBtn = logoutBtn.cloneNode(true);
   logoutBtn.parentNode.replaceChild(newLogoutBtn, logoutBtn);
   
   newLogoutBtn.addEventListener('click', () => {
-    // Clear all data
     currentUser = null; 
     currentUserDistrict = null;
     isAdmin = false;
@@ -1683,26 +1685,22 @@ function initApp() {
     candidate = { name:'', school:'', level:'Beginner (S1/S2)', theme:'', title:'', venue: RWANDAN_DISTRICTS[0] };
     resetTimer();
     
-    // Hide main screen, show login
     document.getElementById('mainScreen').classList.add('hidden');
     document.getElementById('loginScreen').classList.remove('hidden');
     
-    // Clear any existing notifications
     const container = document.getElementById('notificationContainer');
     if (container) {
       container.innerHTML = '';
     }
     
-    // Show single logout notification
     showNotification('👋 Logged Out', 'You have been signed out successfully.', 'info', 3000);
   });
 
-  // Timer event listeners
+  // Timer
   const timerWrap = document.getElementById('timerWrap');
   const timerStartBtn = document.getElementById('timerStartBtn');
   const timerResetBtn = document.getElementById('timerResetBtn');
   
-  // Remove existing listeners by cloning
   const newTimerWrap = timerWrap.cloneNode(true);
   timerWrap.parentNode.replaceChild(newTimerWrap, timerWrap);
   
@@ -1764,7 +1762,6 @@ document.getElementById('loginBtn').addEventListener('click', () => {
   const u = document.getElementById('loginUsername').value.trim();
   const p = document.getElementById('loginPassword').value.trim();
   
-  // Check admin credentials first
   if (u === ADMIN_USER && p === ADMIN_PASS) {
     currentUser = ADMIN_USER;
     currentUserDistrict = 'All Districts';
@@ -1779,7 +1776,6 @@ document.getElementById('loginBtn').addEventListener('click', () => {
     return;
   }
   
-  // Check regular users
   const user = db.auth(u, p);
   if (user) {
     currentUser = u;

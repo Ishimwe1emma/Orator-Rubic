@@ -368,106 +368,6 @@
       font-weight: 600;
     }
 
-    /* ─── COUNTDOWN TIMER ─── */
-    .timer-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0;
-      border-radius: var(--radius-sm);
-      padding: 0.3rem 0.7rem;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      transition: all 0.3s ease;
-      position: relative;
-      flex-shrink: 0;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-      -webkit-user-select: none;
-      user-select: none;
-    }
-    /* Only make the timer background clickable, not the whole area */
-    .timer-wrap .click-area {
-      position: absolute;
-      inset: 0;
-      cursor: pointer;
-      z-index: 1;
-    }
-    .timer-wrap .timer-content {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0;
-      pointer-events: none;
-    }
-    .timer-wrap .timer-content .timer-ctrl-btn {
-      pointer-events: auto !important;
-      z-index: 3;
-      position: relative;
-    }
-    .timer-wrap:hover { border-color: rgba(255,255,255,0.15); }
-    .timer-label {
-      font-size: 0.55rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      line-height: 1;
-      margin-bottom: 1px;
-    }
-    .timer-display {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 1rem;
-      color: var(--gold2);
-      letter-spacing: 0.04em;
-      line-height: 1;
-      transition: color 0.3s;
-    }
-    .timer-controls {
-      display: flex;
-      gap: 2px;
-      margin-top: 2px;
-    }
-    .timer-ctrl-btn {
-      width: 18px; height: 18px;
-      background: rgba(255,255,255,0.06);
-      border: none;
-      border-radius: 4px;
-      color: var(--muted);
-      font-size: 0.55rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background var(--transition), color var(--transition);
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-      -webkit-user-select: none;
-      user-select: none;
-    }
-    .timer-ctrl-btn:hover { background: rgba(255,255,255,0.12); color: var(--text); }
-
-    .timer-wrap.alert {
-      background: rgba(255,93,93,0.12);
-      border-color: rgba(255,93,93,0.6);
-      box-shadow: 0 0 0 2px rgba(255,93,93,0.2), 0 0 16px rgba(255,93,93,0.25);
-      animation: timerPulse 1s ease-in-out infinite;
-    }
-    .timer-wrap.alert .timer-display { color: #ff5d5d; }
-    .timer-wrap.alert .timer-label { color: #ff8a8a; }
-    @keyframes timerPulse {
-      0%,100% { box-shadow: 0 0 0 2px rgba(255,93,93,0.2), 0 0 16px rgba(255,93,93,0.25); }
-      50% { box-shadow: 0 0 0 4px rgba(255,93,93,0.3), 0 0 28px rgba(255,93,93,0.4); }
-    }
-    .timer-wrap.ended {
-      background: rgba(255,93,93,0.18);
-      border-color: rgba(255,93,93,0.8);
-    }
-    .timer-wrap.ended .timer-display { color: #ff5d5d; }
-
     /* ─── MAIN LAYOUT ─── */
     #mainScreen { padding-bottom: 5rem; animation: fadeIn 0.4s ease; }
     @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
@@ -963,8 +863,6 @@
       .topbar-logo { font-size: 0.9rem; }
       .score-pill { padding: 0.25rem 0.6rem; font-size: 0.75rem; }
       .user-chip { padding: 0.25rem 0.6rem 0.25rem 0.4rem; }
-      .timer-display { font-size: 0.9rem; }
-      .timer-wrap { padding: 0.25rem 0.5rem; }
       .two-col { grid-template-columns: 1fr; }
       .progress-wrap { flex-direction: column; align-items: center; }
       .action-bar { flex-direction: column; }
@@ -1042,19 +940,6 @@
   <div id="topbar">
     <div class="topbar-logo syne">Orator<span>Judge</span><span class="admin-badge hidden" id="adminBadge">Admin</span></div>
     <div class="score-pill" id="topbarScore">⭐ 0 / 50</div>
-
-    <!-- Countdown Timer -->
-    <div class="timer-wrap" id="timerWrap">
-      <div class="click-area" id="timerClickArea"></div>
-      <div class="timer-content">
-        <div class="timer-label">Speech Timer</div>
-        <div class="timer-display" id="timerDisplay">5:00</div>
-        <div class="timer-controls">
-          <button class="timer-ctrl-btn" id="timerStartBtn" title="Start / Pause"><i class="fas fa-play"></i></button>
-          <button class="timer-ctrl-btn" id="timerResetBtn" title="Reset"><i class="fas fa-undo"></i></button>
-        </div>
-      </div>
-    </div>
 
     <div class="topbar-right">
       <div class="user-chip">
@@ -1259,84 +1144,6 @@ initScores();
 
 function total() { return CRITERIA.reduce((s, c) => s + (scores[c.id] || 0), 0); }
 function esc(s) { return String(s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
-
-// ─── TIMER ───
-const TIMER_DURATION = 5 * 60;
-let timerSeconds = TIMER_DURATION;
-let timerRunning = false;
-let timerInterval = null;
-
-function formatTime(s) {
-  const mins = Math.floor(s / 60);
-  const secs = s % 60;
-  return `${mins}:${secs.toString().padStart(2, '0')}`;
-}
-
-function updateTimerUI() {
-  const display = document.getElementById('timerDisplay');
-  const wrap = document.getElementById('timerWrap');
-  const startBtn = document.getElementById('timerStartBtn');
-  if (!display || !wrap) return;
-  display.textContent = formatTime(timerSeconds);
-  if (startBtn) {
-    startBtn.innerHTML = timerRunning ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
-  }
-  wrap.classList.remove('alert', 'ended');
-  if (timerSeconds === 0) {
-    wrap.classList.add('ended');
-  } else if (timerSeconds <= 20) {
-    wrap.classList.add('alert');
-  }
-}
-
-function startTimer() {
-  if (timerRunning) return;
-  if (timerSeconds === 0) {
-    timerSeconds = TIMER_DURATION;
-    updateTimerUI();
-  }
-  timerRunning = true;
-  timerInterval = setInterval(() => {
-    if (timerSeconds > 0) {
-      timerSeconds--;
-      updateTimerUI();
-      if (timerSeconds === 20) {
-        showNotification('⚠️ Time Warning', '20 seconds remaining!', 'warning', 3000);
-      }
-      if (timerSeconds === 0) {
-        timerRunning = false;
-        clearInterval(timerInterval);
-        timerInterval = null;
-        updateTimerUI();
-        showNotification('⏱️ Time\'s Up!', 'The speech timer has ended.', 'error', 5000);
-      }
-    }
-  }, 1000);
-  updateTimerUI();
-}
-
-function pauseTimer() {
-  timerRunning = false;
-  if (timerInterval) {
-    clearInterval(timerInterval);
-    timerInterval = null;
-  }
-  updateTimerUI();
-}
-
-function resetTimer() {
-  pauseTimer();
-  timerSeconds = TIMER_DURATION;
-  updateTimerUI();
-}
-
-function toggleTimer() {
-  if (timerRunning) {
-    pauseTimer();
-  } else {
-    startTimer();
-  }
-}
 
 // ─── SCORE UPDATE ───
 function updateScore(id, val) {
@@ -1724,7 +1531,6 @@ function renderAllPanels() {
     renderArchivePanel(document.getElementById('panel-archive'));
     switchPanel(activeTab);
   }
-  updateTimerUI();
 }
 
 function switchPanel(tab) {
@@ -1841,7 +1647,6 @@ function initApp() {
     initScores();
     editingIndex = null;
     candidate = { name:'', school:'', level:'Beginner (S1/S2)', theme:'', title:'', venue: RWANDAN_DISTRICTS[0] };
-    resetTimer();
     
     document.getElementById('mainScreen').classList.add('hidden');
     document.getElementById('loginScreen').classList.remove('hidden');
@@ -1854,30 +1659,6 @@ function initApp() {
     showNotification('👋 Logged Out', 'You have been signed out successfully.', 'info', 3000);
   });
 
-  // Timer - Completely redesigned to avoid interference with inputs
-  const timerClickArea = document.getElementById('timerClickArea');
-  const timerStartBtn = document.getElementById('timerStartBtn');
-  const timerResetBtn = document.getElementById('timerResetBtn');
-  
-  timerClickArea.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    toggleTimer();
-  });
-  
-  timerStartBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    toggleTimer();
-  });
-  
-  timerResetBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    resetTimer();
-  });
-
-  updateTimerUI();
   renderAllPanels();
 
   let resizeTimer;

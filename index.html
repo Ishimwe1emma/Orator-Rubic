@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>OratorJudge Pro</title>
   
+  <!-- ─── PWA MANIFEST ─── -->
+  <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIk9yYXRvckp1ZGdlIFBybyIsCiAgInNob3J0X25hbWUiOiAiT3JhdG9ySnVkZ2UiLAogICJkZXNjcmlwdGlvbiI6ICJQcm9mZXNzaW9uYWwgc3BlZWNoIGV2YWx1YXRpb24gcGxhdGZvcm0iLAogICJzdGFydF91cmwiOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzA1MDcwZiIsCiAgInRoZW1lX2NvbG9yIjogIiMwNTA3MGYiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWwsJTNDc3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgdmlld0JveD0nMCAwIDUxMiA1MTInJTNFJTNDcmVjdCB3aWR0aD0nNTEyJyBoZWlnaHQ9JzUxMicgcng9JzEwMCcgZmlsbD0nJTA1MDcwZicvJTNFJTNDY2lyY2xlIGN4PScyNTYnIGN5PScyNTYnIHI9JzE4MCcgZmlsbD0nbm9uZScgc3Ryb2tlPSclMjNmZmI3NGQnIHN0cm9rZS13aWR0aD0nMjAnLyUzRSUzQ3BhdGggZD0nTTE4MCAyMDAgTDIyMCAyMDAgTDIyMCAzMjAgTDE4MCAzMjAgWicgZmlsbD0nJTIzZmZiNzRkJy8lM0UlM0NwYXRoIGQ9J00yOTIgMjAwIEwzMzIgMjAwIEwzMzIgMzIwIEwyOTIgMzIwIFonIGZpbGw9JyUyM2ZmYjc0ZCcvJTNFJTNDcGF0aCBkPSdNMjM2IDE3MCBMMjU2IDE0MCBMMjc2IDE3MCBMMjc2IDIyMCBMMjM2IDIyMCBaJyBmaWxsPSclMjNmZmI3NGQnLyUzRSUzQ3BhdGggZD0nTTIzNiAzNDAgTDI1NiAzNzAgTDI3NiAzNDAgTDI3NiAyOTAgTDIzNiAyOTAgWicgZmlsbD0nJTIzZmZiNzRkJy8lM0UlM0NjaXJjbGUgY3g9JzI1NicgY3k9JzI1Nicgcj0nNDAnIGZpbGw9J25vbmUnIHN0cm9rZT0nJTIzZmZiNzRkJyBzdHJva2Utd2lkdGg9JzEyJy8lM0UlM0Mvc3ZnJTNFIgogICAgfQogIF0KfQ==">
+  
   <!-- ─── APP ICONS ─── -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%23050f1a'/%3E%3Ccircle cx='256' cy='256' r='180' fill='none' stroke='%23ffb74d' stroke-width='20'/%3E%3Cpath d='M180 200 L220 200 L220 320 L180 320 Z' fill='%23ffb74d'/%3E%3Cpath d='M292 200 L332 200 L332 320 L292 320 Z' fill='%23ffb74d'/%3E%3Cpath d='M236 170 L256 140 L276 170 L276 220 L236 220 Z' fill='%23ffb74d'/%3E%3Cpath d='M236 340 L256 370 L276 340 L276 290 L236 290 Z' fill='%23ffb74d'/%3E%3Ccircle cx='256' cy='256' r='40' fill='none' stroke='%23ffb74d' stroke-width='12'/%3E%3C/svg%3E">
   <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%23050f1a'/%3E%3Ccircle cx='256' cy='256' r='180' fill='none' stroke='%23ffb74d' stroke-width='20'/%3E%3Cpath d='M180 200 L220 200 L220 320 L180 320 Z' fill='%23ffb74d'/%3E%3Cpath d='M292 200 L332 200 L332 320 L292 320 Z' fill='%23ffb74d'/%3E%3Cpath d='M236 170 L256 140 L276 170 L276 220 L236 220 Z' fill='%23ffb74d'/%3E%3Cpath d='M236 340 L256 370 L276 340 L276 290 L236 290 Z' fill='%23ffb74d'/%3E%3Ccircle cx='256' cy='256' r='40' fill='none' stroke='%23ffb74d' stroke-width='12'/%3E%3C/svg%3E">
@@ -1034,6 +1037,14 @@
       .venue-selector select { max-width: 100%; }
       .notification-container { top: 0.5rem; right: 0.5rem; max-width: calc(100% - 1rem); }
       .criteria-scroll { max-height: 300px; }
+      
+      /* Mobile: Show download button, hide on desktop */
+      .download-app-btn.hide-on-mobile { display: none !important; }
+    }
+
+    /* Desktop: Hide download button */
+    @media (min-width: 481px) {
+      .download-app-btn.hide-on-desktop { display: none !important; }
     }
 
     /* ─── MOBILE INPUT FIX ─── */
@@ -1063,12 +1074,14 @@
     <div class="login-title syne">OratorJudge Pro</div>
     <div class="login-sub">Professional speech evaluation platform</div>
     
-    <!-- Download App Button -->
+    <!-- Download & Share Buttons -->
     <div style="display:flex; gap:0.5rem; margin-bottom: 1.5rem; flex-wrap:wrap;">
-      <button class="download-app-btn" id="downloadAppBtn" style="flex:1; justify-content:center;">
-        <i class="fas fa-download"></i> Download App
+      <!-- Download App - Visible only on mobile -->
+      <button class="download-app-btn hide-on-desktop" id="downloadAppBtn" style="flex:1; justify-content:center;">
+        <i class="fas fa-download"></i> Install App
         <span class="badge">PWA</span>
       </button>
+      <!-- Share Button - Visible on both mobile and desktop -->
       <button class="download-app-btn" id="shareAppBtn" style="flex:1; justify-content:center;">
         <i class="fas fa-share-alt"></i> Share
       </button>
@@ -1222,15 +1235,20 @@ function removeNotification(notification) {
   }, 300);
 }
 
+// ─── DETECT DEVICE TYPE ───
+function isMobileDevice() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+}
+
 // ─── PWA / DOWNLOAD APP ───
 function installApp() {
-  // Check if the app can be installed via PWA
+  // Check if already installed as standalone app
   if (window.navigator && window.navigator.standalone) {
     showNotification('📱 Already Installed', 'OratorJudge Pro is already running as an app.', 'info', 3000);
     return;
   }
   
-  // Check if beforeinstallprompt is available
+  // Check if beforeinstallprompt is available (Chrome Android)
   if (window.deferredPrompt) {
     window.deferredPrompt.prompt();
     window.deferredPrompt.userChoice.then((choiceResult) => {
@@ -1244,12 +1262,12 @@ function installApp() {
     return;
   }
   
-  // Fallback: Show install instructions
+  // For iOS - show instructions
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
   const isAndroid = /Android/.test(navigator.userAgent);
   
   if (isIOS) {
-    showNotification('📱 Install on iOS', 'Tap the Share button and select "Add to Home Screen".', 'info', 5000);
+    showNotification('📱 Install on iOS', 'Tap the Share button (square with arrow) and select "Add to Home Screen".', 'info', 5000);
   } else if (isAndroid) {
     showNotification('📱 Install on Android', 'Tap the menu (⋮) and select "Add to Home Screen" or "Install App".', 'info', 5000);
   } else {
@@ -1260,15 +1278,18 @@ function installApp() {
 function shareApp() {
   const shareData = {
     title: 'OratorJudge Pro',
-    text: 'Professional speech evaluation platform for judges and speakers.',
+    text: 'Professional speech evaluation platform for judges and speakers. Join now!',
     url: window.location.href
   };
   
   if (navigator.share) {
     navigator.share(shareData).then(() => {
       showNotification('✅ Shared', 'App link shared successfully!', 'success', 3000);
-    }).catch(() => {
-      // User cancelled or share failed
+    }).catch((err) => {
+      // User cancelled or share failed - don't show error
+      if (err.name !== 'AbortError') {
+        console.log('Share cancelled or failed');
+      }
     });
   } else {
     // Fallback: Copy link to clipboard
@@ -1281,11 +1302,17 @@ function shareApp() {
       // Fallback for older browsers
       const textarea = document.createElement('textarea');
       textarea.value = url;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
       document.body.appendChild(textarea);
       textarea.select();
-      document.execCommand('copy');
+      try {
+        document.execCommand('copy');
+        showNotification('📋 Copied', 'App link copied to clipboard!', 'success', 3000);
+      } catch (e) {
+        showNotification('❌ Error', 'Could not copy link. Please copy manually.', 'error', 3000);
+      }
       document.body.removeChild(textarea);
-      showNotification('📋 Copied', 'App link copied to clipboard!', 'success', 3000);
     }
   }
 }
@@ -1296,7 +1323,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
   window.deferredPrompt = e;
-  // Update download button to show install option
+  // Update download button text
   const downloadBtn = document.getElementById('downloadAppBtn');
   if (downloadBtn) {
     downloadBtn.innerHTML = `<i class="fas fa-download"></i> Install App <span class="badge">PWA</span>`;

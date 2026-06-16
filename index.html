@@ -19,6 +19,7 @@
       --gold-dim: rgba(255,183,77,0.12);
       --red: #ff5d5d;
       --green: #4ade80;
+      --blue: #60a5fa;
       --text: #f0f3ff;
       --muted: #8892b0;
       --radius: 16px;
@@ -38,7 +39,6 @@
       overflow-x: hidden;
     }
 
-    /* ─── AMBIENT GLOW ─── */
     body::before {
       content:'';
       position: fixed;
@@ -50,11 +50,9 @@
       z-index: 0;
     }
 
-    /* ─── TYPOGRAPHY ─── */
     .syne { font-family: 'Syne', sans-serif; }
     h1,h2,h3 { font-family: 'Syne', sans-serif; }
 
-    /* ─── UTILITY ─── */
     .hidden { display: none !important; }
     .flex { display: flex; }
     .items-center { align-items: center; }
@@ -66,7 +64,6 @@
     .text-sm { font-size: 0.82rem; }
     .text-xs { font-size: 0.72rem; }
 
-    /* ─── CARD ─── */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -77,7 +74,6 @@
       z-index: 1;
     }
 
-    /* ─── INPUTS ─── */
     .field { margin-bottom: 1rem; }
     .field label {
       display: block;
@@ -114,7 +110,6 @@
       cursor: pointer;
     }
 
-    /* ─── BUTTONS ─── */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -138,6 +133,7 @@
     }
     .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(255,183,77,0.45); }
     .btn-primary:active { transform: translateY(1px); box-shadow: 0 2px 8px rgba(255,183,77,0.2); }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
     .btn-ghost {
       background: rgba(255,255,255,0.05);
       color: var(--muted);
@@ -150,9 +146,100 @@
       border: 1px solid rgba(255,93,93,0.25);
     }
     .btn-danger:hover { background: rgba(255,93,93,0.2); }
+    .btn-success {
+      background: rgba(74,222,128,0.12);
+      color: var(--green);
+      border: 1px solid rgba(74,222,128,0.25);
+    }
+    .btn-success:hover { background: rgba(74,222,128,0.2); }
     .btn-sm { padding: 0.4rem 1rem; font-size: 0.78rem; }
     .btn-full { width: 100%; justify-content: center; }
     .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* ─── NOTIFICATIONS ─── */
+    .notification-container {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      max-width: 400px;
+      width: 100%;
+      pointer-events: none;
+    }
+    .notification {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+      animation: slideInRight 0.4s cubic-bezier(0.16,1,0.3,1) forwards;
+      pointer-events: auto;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .notification::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+    }
+    .notification.success::before { background: var(--green); }
+    .notification.error::before { background: var(--red); }
+    .notification.info::before { background: var(--blue); }
+    .notification.warning::before { background: var(--gold); }
+
+    .notification-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .notification.success .notification-icon { color: var(--green); }
+    .notification.error .notification-icon { color: var(--red); }
+    .notification.info .notification-icon { color: var(--blue); }
+    .notification.warning .notification-icon { color: var(--gold); }
+
+    .notification-content { flex: 1; }
+    .notification-title {
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-bottom: 0.15rem;
+    }
+    .notification-message {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    .notification-close {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 0.8rem;
+      padding: 0.2rem;
+      flex-shrink: 0;
+      transition: color var(--transition);
+    }
+    .notification-close:hover { color: var(--text); }
+
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes slideOutRight {
+      from { opacity: 1; transform: translateX(0); }
+      to { opacity: 0; transform: translateX(40px); }
+    }
+    .notification.removing {
+      animation: slideOutRight 0.3s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
 
     /* ─── LOGIN SCREEN ─── */
     #loginScreen {
@@ -180,7 +267,17 @@
     }
     .login-title { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em; }
     .login-sub { color: var(--muted); font-size: 0.85rem; margin-top: 0.3rem; margin-bottom: 2rem; }
-    .divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+    .auth-toggle {
+      text-align: center;
+      font-size: 0.83rem;
+      color: var(--muted);
+      margin-top: 1rem;
+    }
+    .auth-toggle strong {
+      color: var(--gold);
+      cursor: pointer;
+    }
+    .auth-toggle strong:hover { text-decoration: underline; }
     .error-banner {
       background: rgba(255,93,93,0.12);
       border: 1px solid rgba(255,93,93,0.3);
@@ -196,15 +293,6 @@
       25% { transform: translateX(-6px); }
       75% { transform: translateX(6px); }
     }
-    .reg-panel {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.2rem;
-      margin-top: 1rem;
-      animation: slideDown 0.25s ease;
-    }
-    @keyframes slideDown { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
 
     /* ─── TOP BAR ─── */
     #topbar {
@@ -214,10 +302,23 @@
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
       padding: 0.75rem 1.25rem;
-      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      flex-wrap: wrap;
     }
-    .topbar-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.05rem; letter-spacing: -0.01em; }
+    .topbar-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.05rem; letter-spacing: -0.01em; flex-shrink: 0; }
     .topbar-logo span { color: var(--gold); }
+    .topbar-logo .admin-badge {
+      font-size: 0.55rem;
+      background: var(--gold-dim);
+      color: var(--gold);
+      padding: 0.1rem 0.5rem;
+      border-radius: 100px;
+      margin-left: 0.3rem;
+      font-weight: 600;
+    }
     .score-pill {
       background: var(--gold-dim);
       border: 1px solid var(--border-active);
@@ -228,10 +329,11 @@
       font-size: 0.85rem;
       color: var(--gold2);
       transition: all 0.3s;
+      white-space: nowrap;
     }
     .score-pill.bump { animation: bump 0.35s cubic-bezier(0.4,0,0.2,1); }
     @keyframes bump { 0%,100% { transform:scale(1); } 50% { transform:scale(1.15); } }
-    .topbar-right { display: flex; align-items: center; gap: 0.6rem; }
+    .topbar-right { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; flex-wrap: wrap; }
     .user-chip {
       background: var(--surface2);
       border: 1px solid var(--border);
@@ -247,6 +349,82 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 0.7rem; font-weight: 800; color: #0a0c14;
     }
+    .user-district {
+      font-size: 0.6rem;
+      color: var(--gold);
+      background: var(--gold-dim);
+      padding: 0.1rem 0.4rem;
+      border-radius: 100px;
+      font-weight: 600;
+    }
+
+    /* ─── COUNTDOWN TIMER ─── */
+    .timer-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      border-radius: var(--radius-sm);
+      padding: 0.3rem 0.7rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .timer-wrap:hover { border-color: rgba(255,255,255,0.15); }
+    .timer-label {
+      font-size: 0.55rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      line-height: 1;
+      margin-bottom: 1px;
+    }
+    .timer-display {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--gold2);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      transition: color 0.3s;
+    }
+    .timer-controls {
+      display: flex;
+      gap: 2px;
+      margin-top: 2px;
+    }
+    .timer-ctrl-btn {
+      width: 18px; height: 18px;
+      background: rgba(255,255,255,0.06);
+      border: none; border-radius: 4px;
+      color: var(--muted); font-size: 0.55rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background var(--transition), color var(--transition);
+    }
+    .timer-ctrl-btn:hover { background: rgba(255,255,255,0.12); color: var(--text); }
+
+    .timer-wrap.alert {
+      background: rgba(255,93,93,0.12);
+      border-color: rgba(255,93,93,0.6);
+      box-shadow: 0 0 0 2px rgba(255,93,93,0.2), 0 0 16px rgba(255,93,93,0.25);
+      animation: timerPulse 1s ease-in-out infinite;
+    }
+    .timer-wrap.alert .timer-display { color: #ff5d5d; }
+    .timer-wrap.alert .timer-label { color: #ff8a8a; }
+    @keyframes timerPulse {
+      0%,100% { box-shadow: 0 0 0 2px rgba(255,93,93,0.2), 0 0 16px rgba(255,93,93,0.25); }
+      50% { box-shadow: 0 0 0 4px rgba(255,93,93,0.3), 0 0 28px rgba(255,93,93,0.4); }
+    }
+    .timer-wrap.ended {
+      background: rgba(255,93,93,0.18);
+      border-color: rgba(255,93,93,0.8);
+    }
+    .timer-wrap.ended .timer-display { color: #ff5d5d; }
 
     /* ─── MAIN LAYOUT ─── */
     #mainScreen { padding-bottom: 5rem; animation: fadeIn 0.4s ease; }
@@ -307,19 +485,13 @@
     @keyframes panelIn { from { opacity:0; transform:translateX(10px); } to { opacity:1; transform:translateX(0); } }
 
     /* ─── CANDIDATE PANEL ─── */
-    .candidate-header {
-      margin-bottom: 1.25rem;
-    }
+    .candidate-header { margin-bottom: 1.25rem; }
     .candidate-header h2 { font-size: 1.15rem; font-weight: 800; }
     .candidate-header p { color: var(--muted); font-size: 0.82rem; margin-top: 0.2rem; }
-    .candidate-form .card { padding: 1.25rem; }
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 
     /* ─── RUBRIC PANEL ─── */
-    .rubric-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 1rem;
-    }
+    .rubric-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
     .rubric-header h2 { font-size: 1.15rem; font-weight: 800; }
     .progress-wrap {
       background: var(--surface);
@@ -328,11 +500,9 @@
       padding: 1rem 1.25rem;
       margin-bottom: 1rem;
       display: flex; align-items: center; gap: 1.2rem;
+      flex-wrap: wrap;
     }
-    .score-arc {
-      position: relative;
-      width: 72px; height: 72px; flex-shrink: 0;
-    }
+    .score-arc { position: relative; width: 72px; height: 72px; flex-shrink: 0; }
     .score-arc svg { transform: rotate(-90deg); }
     .score-arc-label {
       position: absolute; inset: 0;
@@ -340,7 +510,7 @@
     }
     .score-arc-label strong { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--gold2); line-height: 1; }
     .score-arc-label span { font-size: 0.6rem; color: var(--muted); }
-    .score-bars { flex: 1; display: flex; flex-direction: column; gap: 0.3rem; }
+    .score-bars { flex: 1; display: flex; flex-direction: column; gap: 0.3rem; min-width: 120px; }
     .bar-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.7rem; color: var(--muted); }
     .bar-track { flex: 1; height: 4px; background: rgba(255,255,255,0.06); border-radius: 100px; overflow: hidden; }
     .bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold), #ff9f1c); border-radius: 100px; transition: width 0.4s cubic-bezier(0.4,0,0.2,1); }
@@ -358,8 +528,7 @@
     .criteria-item.scored { border-color: rgba(255,183,77,0.25); }
     .criteria-header {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0.85rem 1rem; cursor: pointer;
-      gap: 0.75rem;
+      padding: 0.85rem 1rem; cursor: pointer; gap: 0.75rem;
     }
     .criteria-name { font-weight: 600; font-size: 0.88rem; flex: 1; }
     .criteria-score-badge {
@@ -376,12 +545,7 @@
     .criteria-score-badge.nonzero { color: var(--gold2); border-color: var(--border-active); background: var(--gold-dim); }
     .chevron { color: var(--muted); font-size: 0.7rem; transition: transform 0.25s; }
     .criteria-item.open .chevron { transform: rotate(180deg); }
-
-    .criteria-body {
-      display: none;
-      padding: 0 1rem 1rem;
-      animation: expandIn 0.2s ease;
-    }
+    .criteria-body { display: none; padding: 0 1rem 1rem; animation: expandIn 0.2s ease; }
     .criteria-item.open .criteria-body { display: block; }
     @keyframes expandIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
 
@@ -417,10 +581,47 @@
     }
     .criteria-item .field textarea { background: var(--bg); }
 
+    /* ─── ACTION BAR ─── */
+    .action-bar {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .action-bar .btn { flex: 1; }
+
     /* ─── ARCHIVE PANEL ─── */
-    .archive-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .archive-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
     .archive-header h2 { font-size: 1.15rem; font-weight: 800; }
-    .subtabs { display: flex; gap: 0.4rem; margin-bottom: 1rem; }
+    .venue-selector {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .venue-selector label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+    .venue-selector select {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.4rem 1rem;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      cursor: pointer;
+      max-width: 200px;
+    }
+    .venue-selector select:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+    .subtabs { display: flex; gap: 0.4rem; margin-bottom: 1rem; flex-wrap: wrap; }
     .stab {
       padding: 0.35rem 1rem;
       background: var(--surface); border: 1px solid var(--border);
@@ -440,9 +641,17 @@
       transition: border-color var(--transition);
     }
     .report-item:hover { border-color: rgba(255,255,255,0.12); }
-    .report-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+    .report-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
     .report-name { font-weight: 700; font-size: 0.95rem; }
     .report-meta { font-size: 0.72rem; color: var(--muted); margin-top: 0.2rem; line-height: 1.5; }
+    .report-venue {
+      font-size: 0.72rem;
+      color: var(--gold);
+      background: var(--gold-dim);
+      padding: 0.1rem 0.5rem;
+      border-radius: 100px;
+      display: inline-block;
+    }
     .score-tag {
       background: var(--gold-dim);
       border: 1px solid var(--border-active);
@@ -455,9 +664,7 @@
     }
     .report-actions { margin-top: 0.75rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
 
-    .empty-state {
-      text-align: center; padding: 3rem 1rem;
-    }
+    .empty-state { text-align: center; padding: 3rem 1rem; }
     .empty-icon { font-size: 2.5rem; color: var(--muted); opacity: 0.4; margin-bottom: 0.8rem; }
     .empty-state p { color: var(--muted); font-size: 0.85rem; }
 
@@ -477,23 +684,13 @@
       width: 26px; height: 26px; border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
       font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.75rem;
-      background: var(--bg2); color: var(--muted);
-      flex-shrink: 0;
+      background: var(--bg2); color: var(--muted); flex-shrink: 0;
     }
     .lb-rank.gold { background: rgba(255,215,0,0.15); color: #ffd700; }
     .lb-rank.silver { background: rgba(192,192,192,0.12); color: #c0c0c0; }
     .lb-rank.bronze { background: rgba(205,127,50,0.15); color: #cd7f32; }
     .lb-name { flex: 1; font-size: 0.88rem; font-weight: 600; }
     .lb-score { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.88rem; color: var(--gold2); }
-
-    /* ─── SAVE FLOATING BTN ─── */
-    .save-fab {
-      position: fixed; bottom: calc(5.5rem + env(safe-area-inset-bottom)); right: 1.25rem;
-      z-index: 99;
-      display: none;
-    }
-    .save-fab.visible { display: flex; }
-    .save-fab .btn { box-shadow: 0 8px 28px rgba(255,183,77,0.45); }
 
     /* ─── MODAL ─── */
     .modal-overlay {
@@ -558,18 +755,18 @@
       margin-top: 0.5rem;
     }
 
-    /* ─── PRINT REPORT (hidden on screen, used for printing/PDF) ─── */
+    /* ─── PRINT REPORT ─── */
     #printArea { display: none; }
 
     /* ─── RESPONSIVE ─── */
     @media (min-width: 768px) {
       .mobile-nav { display: none; }
-      .save-fab { bottom: 1.5rem; }
       #mainScreen { padding-bottom: 2rem; }
       .desktop-tabs { display: flex; }
       .two-col { grid-template-columns: 1fr 1fr; }
       .panel { padding: 1.5rem; }
       .report-grid { grid-template-columns: repeat(3, 1fr); }
+      .notification-container { top: 1.5rem; right: 1.5rem; }
     }
 
     @media (min-width: 1024px) {
@@ -588,7 +785,6 @@
       .desktop-tabs { display: none; }
       .mobile-nav { display: none; }
       #mainScreen { padding-bottom: 2rem; }
-      .save-fab { display: none !important; }
     }
 
     /* ─── SCROLL ─── */
@@ -596,25 +792,6 @@
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 100px; }
     ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
-
-    /* ─── TOAST ─── */
-    .toast-wrap { position: fixed; bottom: calc(6rem + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); z-index: 300; pointer-events: none; }
-    @media (min-width: 768px) { .toast-wrap { bottom: 2rem; } }
-    .toast {
-      background: #1a2035;
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 0.6rem 1.2rem;
-      font-size: 0.82rem; font-weight: 600;
-      white-space: nowrap;
-      display: flex; align-items: center; gap: 0.5rem;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-      animation: toastIn 0.3s cubic-bezier(0.16,1,0.3,1), toastOut 0.3s 2.5s ease forwards;
-    }
-    .toast.success { border-color: rgba(74,222,128,0.3); color: var(--green); }
-    .toast.error { border-color: rgba(255,93,93,0.3); color: var(--red); }
-    @keyframes toastIn { from { opacity:0; transform:translateY(12px) scale(0.95); } to { opacity:1; transform:translateY(0) scale(1); } }
-    @keyframes toastOut { from { opacity:1; } to { opacity:0; } }
 
     /* ─── PRINT STYLES ─── */
     @media print {
@@ -643,6 +820,26 @@
       .pr-footer { margin-top: 20px; font-size: 0.7rem; color: #999; text-align: center; }
       @page { margin: 1.2cm; }
     }
+
+    /* ─── MOBILE TOPBAR COMPACT ─── */
+    @media (max-width: 480px) {
+      #topbar { padding: 0.6rem 0.8rem; gap: 0.4rem; }
+      .topbar-logo { font-size: 0.9rem; }
+      .score-pill { padding: 0.25rem 0.6rem; font-size: 0.75rem; }
+      .user-chip { padding: 0.25rem 0.6rem 0.25rem 0.4rem; }
+      .timer-display { font-size: 0.9rem; }
+      .timer-wrap { padding: 0.25rem 0.5rem; }
+      .two-col { grid-template-columns: 1fr; }
+      .progress-wrap { flex-direction: column; align-items: center; }
+      .action-bar { flex-direction: column; }
+      .action-bar .btn { width: 100%; }
+      .report-grid { grid-template-columns: 1fr; }
+      .report-top { flex-direction: column; align-items: stretch; }
+      .modal-card { padding: 1rem; margin: 0.5rem; }
+      .venue-selector { flex-wrap: wrap; }
+      .venue-selector select { max-width: 100%; }
+      .notification-container { top: 0.5rem; right: 0.5rem; max-width: calc(100% - 1rem); }
+    }
   </style>
 </head>
 <body>
@@ -653,256 +850,495 @@
     <div class="login-title syne">OratorJudge Pro</div>
     <div class="login-sub">Professional speech evaluation platform</div>
     <div id="loginError" class="hidden"></div>
-    <div class="field"><label>Username</label><input type="text" id="loginUsername" placeholder="Enter username" autocomplete="username"></div>
-    <div class="field"><label>Password</label><input type="password" id="loginPassword" placeholder="Enter password" autocomplete="current-password"></div>
-    <button class="btn btn-primary btn-full" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Sign in</button>
-    <hr class="divider">
-    <div style="text-align:center; font-size:0.83rem; color:var(--muted);">New judge? <strong id="showRegBtn" style="color:var(--gold);cursor:pointer;">Create account</strong></div>
-    <div id="regPanel" class="reg-panel hidden">
-      <div class="field"><label>New Username</label><input type="text" id="regUser" placeholder="Choose username"></div>
-      <div class="field"><label>New Password</label><input type="password" id="regPass" placeholder="Choose password"></div>
-      <button class="btn btn-ghost btn-full" id="doRegBtn"><i class="fas fa-user-plus"></i> Create account</button>
+    
+    <!-- Login Form -->
+    <div id="loginForm">
+      <div class="field"><label>Username</label><input type="text" id="loginUsername" placeholder="Enter username" autocomplete="username"></div>
+      <div class="field"><label>Password</label><input type="password" id="loginPassword" placeholder="Enter password" autocomplete="current-password"></div>
+      <button class="btn btn-primary btn-full" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Sign in</button>
+      <div class="auth-toggle">Don't have an account? <strong id="showSignupBtn">Create one</strong></div>
+    </div>
+
+    <!-- Signup Form -->
+    <div id="signupForm" class="hidden">
+      <div class="field"><label>Username</label><input type="text" id="regUser" placeholder="Choose username"></div>
+      <div class="field"><label>Password</label><input type="password" id="regPass" placeholder="Choose password"></div>
+      <div class="field"><label>Your District</label>
+        <select id="regDistrict">
+          <option value="">Select your district...</option>
+        </select>
+      </div>
+      <button class="btn btn-primary btn-full" id="doRegBtn"><i class="fas fa-user-plus"></i> Create account</button>
+      <div class="auth-toggle">Already have an account? <strong id="showLoginBtn">Sign in</strong></div>
     </div>
   </div>
 </div>
 
 <div id="mainScreen" class="hidden">
-  <!-- Topbar -->
   <div id="topbar">
-    <div class="topbar-logo syne">Orator<span>Judge</span></div>
+    <div class="topbar-logo syne">Orator<span>Judge</span><span class="admin-badge hidden" id="adminBadge">Admin</span></div>
+    <div class="score-pill" id="topbarScore">⭐ 0 / 50</div>
+
+    <!-- Countdown Timer -->
+    <div class="timer-wrap" id="timerWrap" title="Click to start/pause">
+      <div class="timer-label">Speech Timer</div>
+      <div class="timer-display" id="timerDisplay">5:00</div>
+      <div class="timer-controls">
+        <button class="timer-ctrl-btn" id="timerStartBtn" title="Start / Pause"><i class="fas fa-play"></i></button>
+        <button class="timer-ctrl-btn" id="timerResetBtn" title="Reset"><i class="fas fa-undo"></i></button>
+      </div>
+    </div>
+
     <div class="topbar-right">
-      <div class="score-pill" id="topbarScore">⭐ 0 / 50</div>
-      <div class="user-chip"><div class="user-avatar" id="userAvatar">J</div><span id="topbarUser">judge</span></div>
+      <div class="user-chip">
+        <div class="user-avatar" id="userAvatar">J</div>
+        <span id="topbarUser">judge</span>
+        <span class="user-district" id="userDistrict">District</span>
+      </div>
       <button class="btn btn-ghost btn-sm" id="logoutBtn" title="Sign out"><i class="fas fa-sign-out-alt"></i></button>
     </div>
   </div>
 
-  <!-- Desktop tabs -->
   <div class="desktop-tabs">
     <button class="dtab active" data-panel="candidate"><i class="fas fa-user-circle"></i> Candidate</button>
     <button class="dtab" data-panel="rubric"><i class="fas fa-clipboard-check"></i> Scoring Rubric</button>
     <button class="dtab" data-panel="archive"><i class="fas fa-folder-open"></i> Archive</button>
   </div>
 
-  <!-- Desktop 3-col or single panel view -->
   <div class="desktop-layout" id="desktopLayout" style="display:none;">
-    <!-- left: candidate -->
     <div class="panel active" id="panel-candidate-desk" style="padding:1.25rem 0 1.25rem 0;"></div>
-    <!-- center: rubric -->
     <div class="panel active" id="panel-rubric-desk" style="padding:1.25rem 0;"></div>
-    <!-- right: archive -->
     <div class="panel active" id="panel-archive-desk" style="padding:1.25rem 0 1.25rem 0;"></div>
   </div>
 
-  <!-- Mobile single panels -->
   <div id="mobilePanels">
     <div class="panel active" id="panel-candidate"></div>
     <div class="panel" id="panel-rubric"></div>
     <div class="panel" id="panel-archive"></div>
   </div>
 
-  <!-- Mobile nav -->
   <nav class="mobile-nav">
     <button class="mnav-btn active" data-panel="candidate"><i class="fas fa-user-circle"></i><span>Candidate</span></button>
     <button class="mnav-btn" data-panel="rubric"><i class="fas fa-clipboard-check"></i><span>Rubric</span></button>
     <button class="mnav-btn has-dot" data-panel="archive"><i class="fas fa-folder-open"></i><div class="dot" id="archiveDot"></div><span>Archive</span></button>
   </nav>
-
-  <!-- FAB save button -->
-  <div class="save-fab visible" id="saveFab">
-    <button class="btn btn-primary" id="saveFabBtn"><i class="fas fa-save"></i> Save Evaluation</button>
-  </div>
 </div>
 
-<!-- Toast container -->
-<div class="toast-wrap" id="toastWrap"></div>
+<!-- Notification Container -->
+<div class="notification-container" id="notificationContainer"></div>
 
-<!-- Hidden print-only area, populated dynamically before printing -->
 <div id="printArea"></div>
 
 <script>
+// ─── RWANDAN DISTRICTS ───
+const RWANDAN_DISTRICTS = [
+  'Bugesera', 'Burera', 'Gakenke', 'Gasabo', 'Gatsibo', 'Gicumbi', 
+  'Gisagara', 'Huye', 'Kamonyi', 'Karongi', 'Kayonza', 'Kicukiro', 
+  'Kirehe', 'Muhanga', 'Musanze', 'Ngoma', 'Ngororero', 'Nyabihu', 
+  'Nyagatare', 'Nyamagabe', 'Nyamasheke', 'Nyanza', 'Nyarugenge', 
+  'Nyaruguru', 'Rubavu', 'Ruhango', 'Rulindo', 'Rusizi', 'Rutsiro', 
+  'Rwamagana'
+];
+
+// ─── ADMIN CREDENTIALS ───
+const ADMIN_USER = 'iDebate';
+const ADMIN_PASS = 'Rwanda';
+
+// ─── NOTIFICATION SYSTEM ───
+let notificationTimeout = null;
+
+function showNotification(title, message, type = 'info', duration = 4000) {
+  const container = document.getElementById('notificationContainer');
+  if (!container) return;
+  
+  const notification = document.createElement('div');
+  notification.className = `notification ${type}`;
+  
+  const icons = {
+    success: 'fa-check-circle',
+    error: 'fa-exclamation-circle',
+    warning: 'fa-exclamation-triangle',
+    info: 'fa-info-circle'
+  };
+  
+  notification.innerHTML = `
+    <div class="notification-icon"><i class="fas ${icons[type] || icons.info}"></i></div>
+    <div class="notification-content">
+      <div class="notification-title">${title}</div>
+      <div class="notification-message">${message}</div>
+    </div>
+    <button class="notification-close"><i class="fas fa-times"></i></button>
+  `;
+  
+  container.appendChild(notification);
+  
+  const closeBtn = notification.querySelector('.notification-close');
+  closeBtn.addEventListener('click', () => {
+    removeNotification(notification);
+  });
+  
+  if (duration > 0) {
+    setTimeout(() => {
+      removeNotification(notification);
+    }, duration);
+  }
+  
+  return notification;
+}
+
+function removeNotification(notification) {
+  if (notification.classList.contains('removing')) return;
+  notification.classList.add('removing');
+  setTimeout(() => {
+    if (notification.parentNode) {
+      notification.parentNode.removeChild(notification);
+    }
+  }, 300);
+}
+
 // ─── DATABASE ───
 class AppDB {
   constructor() {
+    // Initialize users with admin and default judge
+    const defaultUsers = [
+      { u: 'iDebate', p: 'Rwanda', district: 'All Districts', isAdmin: true },
+      { u: 'judge1', p: 'judge123', district: 'Gasabo', isAdmin: false }
+    ];
+    
     if (!localStorage.getItem('oj_users')) {
-      localStorage.setItem('oj_users', JSON.stringify([{ u: 'judge1', p: 'judge123' }]));
+      localStorage.setItem('oj_users', JSON.stringify(defaultUsers));
     }
     if (!localStorage.getItem('oj_reports')) {
       localStorage.setItem('oj_reports', JSON.stringify([]));
     }
+    localStorage.setItem('oj_venues', JSON.stringify(RWANDAN_DISTRICTS));
   }
+  
   users() { return JSON.parse(localStorage.getItem('oj_users')); }
-  auth(u, p) { return this.users().find(x => x.u === u && x.p === p); }
-  register(u, p) {
+  
+  auth(u, p) {
+    const users = this.users();
+    const user = users.find(x => x.u === u && x.p === p);
+    if (user) {
+      return { ...user };
+    }
+    return null;
+  }
+  
+  register(u, p, district) {
     const us = this.users();
     if (us.find(x => x.u === u)) return false;
-    us.push({ u, p }); localStorage.setItem('oj_users', JSON.stringify(us)); return true;
+    us.push({ u, p, district, isAdmin: false });
+    localStorage.setItem('oj_users', JSON.stringify(us));
+    return true;
   }
+  
   reports() { return JSON.parse(localStorage.getItem('oj_reports')); }
-  save(r) { const rs = this.reports(); rs.push(r); localStorage.setItem('oj_reports', JSON.stringify(rs)); }
-  delete(i) { const rs = this.reports(); rs.splice(i, 1); localStorage.setItem('oj_reports', JSON.stringify(rs)); }
+  
+  save(r) { 
+    const rs = this.reports(); 
+    rs.push(r); 
+    localStorage.setItem('oj_reports', JSON.stringify(rs)); 
+  }
+  
+  update(idx, r) {
+    const rs = this.reports();
+    if (idx >= 0 && idx < rs.length) {
+      rs[idx] = { ...rs[idx], ...r, updatedAt: new Date().toLocaleString() };
+      localStorage.setItem('oj_reports', JSON.stringify(rs));
+      return true;
+    }
+    return false;
+  }
+  
+  delete(i) { 
+    const rs = this.reports(); 
+    rs.splice(i, 1); 
+    localStorage.setItem('oj_reports', JSON.stringify(rs)); 
+  }
+  
+  venues() { return JSON.parse(localStorage.getItem('oj_venues')); }
 }
 
 const db = new AppDB();
 let currentUser = null;
+let currentUserDistrict = null;
+let isAdmin = false;
 let activeTab = 'candidate';
 let currentSubtab = 'reports';
+let currentVenue = RWANDAN_DISTRICTS[0] || 'Gasabo';
 let scores = {};
 let comments = {};
-let candidate = { name: '', school: '', level: 'Beginner (S1/S2)', theme: '', title: '' };
+let candidate = { name: '', school: '', level: 'Beginner (S1/S2)', theme: '', title: '', venue: currentVenue };
+let editingIndex = null;
 
 const CRITERIA = [
-  { id: 'intro',     label: 'Introduction & Opening',       max: 5, hint: 'Hook, topic intro, clear direction. GOOD: weak opening. BETTER: gains attention. BEST: strong, engaging hook.' },
-  { id: 'org',       label: 'Organisation & Structure',     max: 5, hint: 'Flow, transitions. GOOD: disorganized. BETTER: logical but uneven. BEST: seamless structure throughout.' },
-  { id: 'message',   label: 'Central Message & Relevance',  max: 5, hint: 'Clear main point tied to theme. GOOD: confusing. BETTER: mostly clear. BEST: focused & memorable.' },
-  { id: 'dev',       label: 'Development of Ideas',         max: 5, hint: 'Reasoning & support. GOOD: listed. BETTER: some detail. BEST: well-supported arguments.' },
-  { id: 'examples',  label: 'Examples & Storytelling',      max: 5, hint: 'Stories, illustrations. GOOD: few/unrelated. BETTER: one relevant. BEST: effective, engaging.' },
-  { id: 'audience',  label: 'Audience Engagement',          max: 5, hint: 'Eye contact, connection. GOOD: limited. BETTER: some effort. BEST: strong, adapts to room.' },
-  { id: 'voice',     label: 'Voice & Delivery',             max: 5, hint: 'Clarity, tone, pacing. GOOD: hard to hear. BETTER: mostly clear. BEST: expressive & confident.' },
-  { id: 'bodylang',  label: 'Body Language & Presence',     max: 5, hint: 'Gestures, posture. GOOD: distracting. BETTER: appropriate. BEST: excellent stage presence.' },
-  { id: 'language',  label: 'Language Use',                 max: 5, hint: 'Vocabulary, fluency. GOOD: basic/repetitive. BETTER: good variation. BEST: natural & effective.' },
-  { id: 'conclusion',label: 'Conclusion & Impact',          max: 5, hint: 'Ending, call to action. GOOD: weak. BETTER: adequate summary. BEST: powerful & memorable.' }
+  { id: 'intro',      label: 'Introduction & Opening',      max: 5, hint: 'Hook, topic intro, clear direction. GOOD: weak opening. BETTER: gains attention. BEST: strong, engaging hook.' },
+  { id: 'org',        label: 'Organisation & Structure',    max: 5, hint: 'Flow, transitions. GOOD: disorganized. BETTER: logical but uneven. BEST: seamless structure throughout.' },
+  { id: 'message',    label: 'Central Message & Relevance', max: 5, hint: 'Clear main point tied to theme. GOOD: confusing. BETTER: mostly clear. BEST: focused & memorable.' },
+  { id: 'dev',        label: 'Development of Ideas',        max: 5, hint: 'Reasoning & support. GOOD: listed. BETTER: some detail. BEST: well-supported arguments.' },
+  { id: 'examples',   label: 'Examples & Storytelling',     max: 5, hint: 'Stories, illustrations. GOOD: few/unrelated. BETTER: one relevant. BEST: effective, engaging.' },
+  { id: 'audience',   label: 'Audience Engagement',         max: 5, hint: 'Eye contact, connection. GOOD: limited. BETTER: some effort. BEST: strong, adapts to room.' },
+  { id: 'voice',      label: 'Voice & Delivery',            max: 5, hint: 'Clarity, tone, pacing. GOOD: hard to hear. BETTER: mostly clear. BEST: expressive & confident.' },
+  { id: 'bodylang',   label: 'Body Language & Presence',    max: 5, hint: 'Gestures, posture. GOOD: distracting. BETTER: appropriate. BEST: excellent stage presence.' },
+  { id: 'language',   label: 'Language Use',                max: 5, hint: 'Vocabulary, fluency. GOOD: basic/repetitive. BETTER: good variation. BEST: natural & effective.' },
+  { id: 'conclusion', label: 'Conclusion & Impact',         max: 5, hint: 'Ending, call to action. GOOD: weak. BETTER: adequate summary. BEST: powerful & memorable.' }
 ];
 
 function initScores() {
-  CRITERIA.forEach(c => { if (scores[c.id] === undefined) scores[c.id] = 0; if (comments[c.id] === undefined) comments[c.id] = ''; });
+  CRITERIA.forEach(c => {
+    if (scores[c.id] === undefined) scores[c.id] = 0;
+    if (comments[c.id] === undefined) comments[c.id] = '';
+  });
 }
 initScores();
 
 function total() { return CRITERIA.reduce((s, c) => s + (scores[c.id] || 0), 0); }
 function esc(s) { return String(s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 
-// ─── TOAST ───
-function toast(msg, type = 'success') {
-  const tw = document.getElementById('toastWrap');
-  const t = document.createElement('div');
-  t.className = `toast ${type}`;
-  t.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${msg}`;
-  tw.innerHTML = ''; tw.appendChild(t);
-  setTimeout(() => t.remove(), 3000);
+// ─── TIMER ───
+const TIMER_DURATION = 5 * 60;
+let timerSeconds = TIMER_DURATION;
+let timerRunning = false;
+let timerInterval = null;
+
+function formatTime(s) {
+  const mins = Math.floor(s / 60);
+  const secs = s % 60;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+
+function updateTimerUI() {
+  const display = document.getElementById('timerDisplay');
+  const wrap = document.getElementById('timerWrap');
+  const startBtn = document.getElementById('timerStartBtn');
+  if (!display || !wrap) return;
+  display.textContent = formatTime(timerSeconds);
+  if (startBtn) {
+    startBtn.innerHTML = timerRunning ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
+  }
+  wrap.classList.remove('alert', 'ended');
+  if (timerSeconds === 0) {
+    wrap.classList.add('ended');
+  } else if (timerSeconds <= 20) {
+    wrap.classList.add('alert');
+  }
+}
+
+function startTimer() {
+  if (timerRunning) return;
+  if (timerSeconds === 0) {
+    timerSeconds = TIMER_DURATION;
+    updateTimerUI();
+  }
+  timerRunning = true;
+  timerInterval = setInterval(() => {
+    if (timerSeconds > 0) {
+      timerSeconds--;
+      updateTimerUI();
+      if (timerSeconds === 20) {
+        showNotification('⚠️ Time Warning', '20 seconds remaining!', 'warning', 3000);
+      }
+      if (timerSeconds === 0) {
+        timerRunning = false;
+        clearInterval(timerInterval);
+        timerInterval = null;
+        updateTimerUI();
+        showNotification('⏱️ Time\'s Up!', 'The speech timer has ended.', 'error', 5000);
+      }
+    }
+  }, 1000);
+  updateTimerUI();
+}
+
+function pauseTimer() {
+  timerRunning = false;
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  updateTimerUI();
+}
+
+function resetTimer() {
+  pauseTimer();
+  timerSeconds = TIMER_DURATION;
+  updateTimerUI();
+}
+
+function toggleTimer() {
+  if (timerRunning) {
+    pauseTimer();
+  } else {
+    startTimer();
+  }
 }
 
 // ─── SCORE UPDATE ───
 function updateScore(id, val) {
   scores[id] = val;
   const tot = total();
-
-  // update topbar
   const pill = document.getElementById('topbarScore');
   if (pill) { pill.textContent = `⭐ ${tot} / 50`; pill.classList.add('bump'); setTimeout(() => pill.classList.remove('bump'), 400); }
-
-  // update badge on criteria item
   document.querySelectorAll(`[data-badge="${id}"]`).forEach(el => {
     el.textContent = `${val} / 5`;
     el.className = `criteria-score-badge ${val > 0 ? 'nonzero' : ''}`;
   });
-
-  // update arc + bars
   renderScoreArc();
+  updateSaveButton();
 }
 
 function renderScoreArc() {
   const tot = total();
-  const pct = tot / 50;
-  const r = 28, cx = 36, cy = 36;
-  const circ = 2 * Math.PI * r;
-  const dash = pct * circ;
-
-  document.querySelectorAll('.arc-bg').forEach(el => { el.setAttribute('stroke-dasharray', `${circ} ${circ}`); });
-  document.querySelectorAll('.arc-fill').forEach(el => {
-    el.setAttribute('stroke-dasharray', `${dash} ${circ - dash}`);
-  });
-  document.querySelectorAll('.arc-total').forEach(el => { el.textContent = tot; });
-
-  // mini bars
+  const r = 28, cx = 36, cy = 36, circ = 2 * Math.PI * r;
+  const dash = (tot / 50) * circ;
+  document.querySelectorAll('.arc-fill').forEach(el => el.setAttribute('stroke-dasharray', `${dash} ${circ - dash}`));
+  document.querySelectorAll('.arc-total').forEach(el => el.textContent = tot);
   CRITERIA.forEach(c => {
-    document.querySelectorAll(`[data-bar="${c.id}"]`).forEach(el => {
-      el.style.width = `${((scores[c.id] || 0) / 5) * 100}%`;
-    });
+    document.querySelectorAll(`[data-bar="${c.id}"]`).forEach(el => el.style.width = `${((scores[c.id]||0)/5)*100}%`);
   });
 }
 
-// ─── RESET ALL DATA (candidate + scores + comments) ───
-function resetEvaluation(showToast = true) {
-  scores = {};
-  comments = {};
-  initScores();
-  candidate = { name: '', school: '', level: 'Beginner (S1/S2)', theme: '', title: '' };
+// ─── COLLECT CANDIDATE FROM DOM ───
+function collectCandidate() {
+  ['cName','cSchool','cLevel','cTheme','cTitle','cVenue'].forEach(id => {
+    const el = document.querySelector(`#${id}`);
+    if (!el) return;
+    const key = { cName:'name', cSchool:'school', cLevel:'level', cTheme:'theme', cTitle:'title', cVenue:'venue' }[id];
+    candidate[key] = el.value;
+  });
+}
+
+// ─── CHECK IF ALL FIELDS ARE FILLED ───
+function allFieldsFilled() {
+  collectCandidate();
+  return candidate.name.trim() !== '' && 
+         candidate.school.trim() !== '' && 
+         candidate.theme.trim() !== '' && 
+         candidate.title.trim() !== '' &&
+         candidate.venue.trim() !== '';
+}
+
+// ─── UPDATE SAVE BUTTON STATE ───
+function updateSaveButton() {
+  const saveBtns = document.querySelectorAll('#rSaveBtn, #cSaveBtn');
+  const filled = allFieldsFilled();
+  saveBtns.forEach(btn => {
+    if (btn) btn.disabled = !filled;
+  });
+}
+
+// ─── RESET ALL ───
+function resetAll() {
+  if (!confirm('Reset all candidate info, scores and comments? This cannot be undone.')) return;
+  scores = {}; comments = {}; initScores();
+  editingIndex = null;
+  candidate = { name: '', school: '', level: 'Beginner (S1/S2)', theme: '', title: '', venue: currentVenue };
   renderAllPanels();
-  if (showToast) toast('New evaluation started — all fields cleared');
+  showNotification('🔄 Reset Complete', 'All data cleared — ready for next speaker.', 'info', 3000);
+}
+
+// ─── SAVE / UPDATE ───
+function saveEvaluation() {
+  collectCandidate();
+  if (!allFieldsFilled()) { 
+    showNotification('⚠️ Incomplete Form', 'Please fill all candidate fields first.', 'warning', 3000);
+    return; 
+  }
+  const tot = total();
+  const perf = tot >= 45 ? 'Exceptional' : tot >= 33 ? 'Solid Performance' : 'Needs Improvement';
+  
+  const reportData = {
+    id: editingIndex !== null ? db.reports()[editingIndex]?.id || Date.now() : Date.now(),
+    judge: currentUser,
+    venue: candidate.venue,
+    candidateName: candidate.name,
+    school: candidate.school,
+    level: candidate.level,
+    speechTheme: candidate.theme,
+    speechTitle: candidate.title,
+    totalScore: tot,
+    performanceLevel: perf,
+    scores: { ...scores },
+    comments: { ...comments },
+    timestamp: new Date().toLocaleString()
+  };
+  
+  if (editingIndex !== null) {
+    // Update existing report
+    const success = db.update(editingIndex, reportData);
+    if (success) {
+      showNotification('✅ Report Updated', `${candidate.name} · ${tot}/50 at ${candidate.venue}`, 'success', 4000);
+      editingIndex = null;
+    }
+  } else {
+    // Save new report
+    db.save(reportData);
+    showNotification('✅ Evaluation Saved', `${candidate.name} · ${tot}/50 at ${candidate.venue}`, 'success', 4000);
+  }
+  
+  renderAllPanels();
 }
 
 // ─── CANDIDATE PANEL ───
 function renderCandidatePanel(container) {
+  const venues = db.venues();
+  // For non-admin users, only show their district
+  const availableVenues = isAdmin ? venues : [currentUserDistrict];
+  const venueOptions = availableVenues.map(v => `<option value="${esc(v)}" ${candidate.venue===v?'selected':''}>${esc(v)}</option>`).join('');
+  
   container.innerHTML = `
     <div class="candidate-header">
-      <h2 class="syne">Candidate Profile</h2>
-      <p>Enter speaker details before scoring</p>
+      <h2 class="syne">${editingIndex !== null ? '✏️ Edit Evaluation' : 'Candidate Profile'}</h2>
+      <p>${editingIndex !== null ? 'Update the evaluation details below' : 'Enter speaker details before scoring'}</p>
     </div>
     <div class="card" style="padding:1.25rem;">
+      <div class="field"><label>Competition Venue (District) *</label>
+        <select id="cVenue" ${!isAdmin ? 'disabled' : ''}>
+          ${venueOptions}
+        </select>
+      </div>
       <div class="field"><label>Full Name *</label><input type="text" id="cName" placeholder="Speaker's full name" value="${esc(candidate.name)}"></div>
       <div class="two-col">
-        <div class="field"><label>School / Institution</label><input type="text" id="cSchool" placeholder="School name" value="${esc(candidate.school)}"></div>
+        <div class="field"><label>School / Institution *</label><input type="text" id="cSchool" placeholder="School name" value="${esc(candidate.school)}"></div>
         <div class="field"><label>Level</label><select id="cLevel">
           <option value="Beginner (S1/S2)" ${candidate.level==='Beginner (S1/S2)'?'selected':''}>🎓 Beginner (S1/S2)</option>
           <option value="Advanced (S4/S5)" ${candidate.level==='Advanced (S4/S5)'?'selected':''}>🚀 Advanced (S4/S5)</option>
         </select></div>
       </div>
-      <div class="field"><label>Speech Theme</label><input type="text" id="cTheme" placeholder="e.g. Leadership, Environment" value="${esc(candidate.theme)}"></div>
-      <div class="field"><label>Speech Title</label><input type="text" id="cTitle" placeholder="Title of the speech" value="${esc(candidate.title)}"></div>
-      <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
-        <button class="btn btn-primary" id="saveCandBtn" style="flex:1;"><i class="fas fa-check"></i> Save Profile</button>
-        <button class="btn btn-ghost" id="resetCandBtn"><i class="fas fa-undo"></i></button>
-      </div>
-    </div>
-    <div style="margin-top:1.25rem; display:flex; gap:0.6rem; flex-wrap:wrap;">
-      <button class="btn btn-primary" id="saveEvalBtnCand" style="flex:1;"><i class="fas fa-archive"></i> Save Evaluation</button>
-      <button class="btn btn-danger" id="resetAllBtnCand"><i class="fas fa-rotate-left"></i> Reset All</button>
+      <div class="field"><label>Speech Theme *</label><input type="text" id="cTheme" placeholder="e.g. Leadership, Environment" value="${esc(candidate.theme)}"></div>
+      <div class="field" style="margin-bottom:0;"><label>Speech Title *</label><input type="text" id="cTitle" placeholder="Title of the speech" value="${esc(candidate.title)}"></div>
+      ${editingIndex !== null ? `<div style="margin-top:0.5rem;font-size:0.75rem;color:var(--gold);"><i class="fas fa-pen"></i> Editing report #${editingIndex + 1}</div>` : ''}
     </div>`;
 
-  container.querySelector('#saveCandBtn').addEventListener('click', () => {
-    candidate.name = document.querySelectorAll('#cName')[0]?.value || '';
-    candidate.school = document.querySelectorAll('#cSchool')[0]?.value || '';
-    candidate.level = document.querySelectorAll('#cLevel')[0]?.value || 'Beginner (S1/S2)';
-    candidate.theme = document.querySelectorAll('#cTheme')[0]?.value || '';
-    candidate.title = document.querySelectorAll('#cTitle')[0]?.value || '';
-    toast('Candidate profile saved');
+  // Add event listeners to update save button state
+  ['cName','cSchool','cTheme','cTitle','cVenue'].forEach(id => {
+    const el = container.querySelector(`#${id}`);
+    if (el) el.addEventListener('input', updateSaveButton);
   });
-  container.querySelector('#resetCandBtn').addEventListener('click', () => {
-    candidate = { name: '', school: '', level: 'Beginner (S1/S2)', theme: '', title: '' };
-    renderAllPanels();
-    toast('Candidate reset');
-  });
-  container.querySelector('#saveEvalBtnCand').addEventListener('click', saveEvaluation);
-  container.querySelector('#resetAllBtnCand').addEventListener('click', () => {
-    if (confirm('Reset candidate info, all scores and comments? This cannot be undone.')) {
-      resetEvaluation();
-    }
-  });
+  const levelEl = container.querySelector('#cLevel');
+  if (levelEl) levelEl.addEventListener('change', updateSaveButton);
 }
 
 // ─── RUBRIC PANEL ───
 function renderRubricPanel(container) {
-  const tot = total(); const pct = tot / 50;
+  const tot = total();
   const r = 28, cx = 36, cy = 36, circ = 2 * Math.PI * r;
-  const dash = pct * circ;
+  const dash = (tot / 50) * circ;
+  const filled = allFieldsFilled();
 
-  const shortCrit = CRITERIA.slice(0, 5);
-
-  let barsHtml = shortCrit.map(c => `
+  const barsHtml = CRITERIA.slice(0, 5).map(c => `
     <div class="bar-row">
       <span class="bar-label">${c.label.split(' ')[0]}</span>
       <div class="bar-track"><div class="bar-fill" data-bar="${c.id}" style="width:${((scores[c.id]||0)/5)*100}%"></div></div>
       <span class="bar-val">${scores[c.id]||0}</span>
     </div>`).join('');
 
-  let criteriaHtml = CRITERIA.map(c => {
+  const criteriaHtml = CRITERIA.map(c => {
     const sv = scores[c.id] || 0;
-    return `<div class="criteria-item ${sv > 0 ? 'scored' : ''}" data-cid="${c.id}">
+    return `<div class="criteria-item ${sv>0?'scored':''}" data-cid="${c.id}">
       <div class="criteria-header">
-        <div style="display:flex;align-items:center;gap:0.5rem;flex:1;min-width:0;">
-          <div class="criteria-name">${c.label}</div>
-        </div>
+        <div class="criteria-name">${c.label}</div>
         <span class="criteria-score-badge ${sv>0?'nonzero':''}" data-badge="${c.id}">${sv} / ${c.max}</span>
         <i class="fas fa-chevron-down chevron"></i>
       </div>
@@ -925,15 +1361,16 @@ function renderRubricPanel(container) {
 
   container.innerHTML = `
     <div class="rubric-header">
-      <h2 class="syne">Scoring Rubric</h2>
+      <h2 class="syne">${editingIndex !== null ? '✏️ Edit Scores' : 'Scoring Rubric'}</h2>
+      ${editingIndex !== null ? `<span style="font-size:0.75rem;color:var(--gold);"><i class="fas fa-pen"></i> Editing mode</span>` : ''}
     </div>
     <div class="progress-wrap">
       <div class="score-arc">
         <svg width="72" height="72" viewBox="0 0 72 72">
-          <circle class="arc-bg" cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"
-            stroke-dasharray="${circ} ${circ}" stroke-dashoffset="0"/>
+          <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"/>
           <circle class="arc-fill" cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="url(#g1)" stroke-width="6"
-            stroke-dasharray="${dash} ${circ-dash}" stroke-dashoffset="0" stroke-linecap="round"/>
+            stroke-dasharray="${dash} ${circ-dash}" stroke-dashoffset="0" stroke-linecap="round"
+            style="transform:rotate(-90deg);transform-origin:center;"/>
           <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ffb74d"/><stop offset="100%" stop-color="#ff9f1c"/></linearGradient></defs>
         </svg>
         <div class="score-arc-label"><strong class="arc-total">${tot}</strong><span>/ 50</span></div>
@@ -941,12 +1378,11 @@ function renderRubricPanel(container) {
       <div class="score-bars">${barsHtml}</div>
     </div>
     ${criteriaHtml}
-    <div style="display:flex; gap:0.6rem; flex-wrap:wrap; margin-top:0.5rem;">
-      <button class="btn btn-primary" id="saveEvalBtnRubric" style="flex:1;"><i class="fas fa-archive"></i> Save Evaluation</button>
-      <button class="btn btn-danger" id="resetAllBtnRubric"><i class="fas fa-rotate-left"></i> Reset All</button>
+    <div class="action-bar">
+      <button class="btn btn-primary" id="rSaveBtn" ${filled ? '' : 'disabled'}><i class="fas ${editingIndex !== null ? 'fa-pen' : 'fa-save'}"></i> ${editingIndex !== null ? 'Update Evaluation' : 'Save Evaluation'}</button>
+      <button class="btn btn-danger" id="rResetBtn"><i class="fas fa-rotate-left"></i> Reset All</button>
     </div>`;
 
-  // accordion
   container.querySelectorAll('.criteria-header').forEach(hdr => {
     hdr.addEventListener('click', () => {
       const item = hdr.closest('.criteria-item');
@@ -956,131 +1392,178 @@ function renderRubricPanel(container) {
     });
   });
 
-  // steppers
   container.querySelectorAll('.stepper-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', e => {
       e.stopPropagation();
       const id = btn.dataset.id;
-      const dir = parseInt(btn.dataset.dir);
-      const nv = Math.min(5, Math.max(0, (scores[id] || 0) + dir));
+      const nv = Math.min(5, Math.max(0, (scores[id]||0) + parseInt(btn.dataset.dir)));
       scores[id] = nv;
       btn.closest('.criteria-item').querySelectorAll(`[data-stepval="${id}"]`).forEach(el => el.textContent = nv);
+      btn.closest('.criteria-item').classList.toggle('scored', nv > 0);
       updateScore(id, nv);
-      if (nv > 0) btn.closest('.criteria-item').classList.add('scored');
-      else btn.closest('.criteria-item').classList.remove('scored');
     });
   });
 
-  // comments
   container.querySelectorAll('textarea[data-comment]').forEach(ta => {
     ta.addEventListener('input', () => { comments[ta.dataset.comment] = ta.value; });
   });
 
-  container.querySelector('#saveEvalBtnRubric')?.addEventListener('click', saveEvaluation);
-  container.querySelector('#resetAllBtnRubric')?.addEventListener('click', () => {
-    if (confirm('Reset candidate info, all scores and comments? This cannot be undone.')) {
-      resetEvaluation();
-    }
-  });
+  container.querySelector('#rSaveBtn').addEventListener('click', saveEvaluation);
+  container.querySelector('#rResetBtn').addEventListener('click', resetAll);
 }
 
 // ─── ARCHIVE PANEL ───
 function renderArchivePanel(container) {
   const reports = db.reports();
+  const venues = db.venues();
   const archiveDot = document.getElementById('archiveDot');
   if (archiveDot) archiveDot.style.display = reports.length > 0 ? 'block' : 'none';
 
-  let reportsHtml = '';
-  if (reports.length === 0) {
-    reportsHtml = `<div class="empty-state"><div class="empty-icon"><i class="fas fa-inbox"></i></div><p>No evaluations saved yet.<br>Score a speaker and hit Save.</p></div>`;
+  // Filter reports based on user role
+  let filteredReports = reports;
+  if (!isAdmin) {
+    // Non-admin users only see their district
+    filteredReports = reports.filter(r => r.venue === currentUserDistrict);
   } else {
-    [...reports].reverse().forEach((r, ri) => {
-      const origIdx = reports.length - 1 - ri;
-      reportsHtml += `<div class="report-item">
-        <div class="report-top">
-          <div><div class="report-name">${esc(r.candidateName)}</div><div class="report-meta">${r.level} · ${esc(r.speechTitle)||'Untitled'}<br>⚖️ ${r.judge} · ${r.timestamp}</div></div>
-          <div class="score-tag">${r.totalScore}/50</div>
-        </div>
-        <div class="report-actions">
-          <button class="btn btn-ghost btn-sm view-btn" data-idx="${origIdx}"><i class="fas fa-eye"></i> Full report</button>
-          <button class="btn btn-ghost btn-sm print-btn" data-idx="${origIdx}"><i class="fas fa-print"></i> Print / PDF</button>
-          <button class="btn btn-danger btn-sm del-btn" data-idx="${origIdx}"><i class="fas fa-trash"></i> Delete</button>
-        </div>
-      </div>`;
-    });
+    // Admin can filter by selected venue
+    filteredReports = reports.filter(r => r.venue === currentVenue);
   }
 
-  // leaderboard
+  let reportsHtml = filteredReports.length === 0
+    ? `<div class="empty-state"><div class="empty-icon"><i class="fas fa-inbox"></i></div><p>No evaluations${!isAdmin ? ` for ${esc(currentUserDistrict)}` : ` for ${esc(currentVenue)}`} yet.</p></div>`
+    : [...filteredReports].reverse().map((r, ri) => {
+        const origIdx = reports.indexOf(r);
+        const isEditable = isAdmin || (r.judge === currentUser && r.venue === currentUserDistrict);
+        return `<div class="report-item">
+          <div class="report-top">
+            <div><div class="report-name">${esc(r.candidateName)}</div>
+            <div class="report-meta">${r.level} · ${esc(r.speechTitle)||'Untitled'}<br>⚖️ ${r.judge} · ${r.timestamp}</div></div>
+            <div class="score-tag">${r.totalScore}/50</div>
+          </div>
+          <div class="report-actions">
+            <button class="btn btn-ghost btn-sm view-btn" data-idx="${origIdx}"><i class="fas fa-eye"></i> Full report</button>
+            <button class="btn btn-ghost btn-sm print-btn" data-idx="${origIdx}"><i class="fas fa-print"></i> Print / PDF</button>
+            ${isEditable ? `<button class="btn btn-success btn-sm edit-btn" data-idx="${origIdx}"><i class="fas fa-pen"></i> Edit</button>` : ''}
+            ${isEditable ? `<button class="btn btn-danger btn-sm del-btn" data-idx="${origIdx}"><i class="fas fa-trash"></i> Delete</button>` : ''}
+          </div>
+        </div>`;
+      }).join('');
+
   const top = (arr, n=5) => [...arr].sort((a,b)=>b.totalScore-a.totalScore).slice(0,n);
-  const beginners = top(reports.filter(r => r.level === 'Beginner (S1/S2)'));
-  const advanced = top(reports.filter(r => r.level === 'Advanced (S4/S5)'));
+  const beginners = top(filteredReports.filter(r => r.level === 'Beginner (S1/S2)'));
+  const advanced  = top(filteredReports.filter(r => r.level === 'Advanced (S4/S5)'));
   const medals = ['gold','silver','bronze'];
   const lbItem = (p,i) => `<div class="lb-item"><div class="lb-rank ${medals[i]||''}">${i+1}</div><div class="lb-name">${esc(p.candidateName)}</div><div class="lb-score">${p.totalScore}/50</div></div>`;
-  const lbSec = (title, icon, arr) => `<div class="lb-section">
-    <div class="lb-title"><i class="fas fa-${icon}"></i> ${title}</div>
-    ${arr.length ? arr.map(lbItem).join('') : '<p class="text-muted text-sm" style="padding:0.4rem 0;">No entries yet</p>'}
-  </div>`;
+  const lbSec  = (title, icon, arr) => `<div class="lb-section"><div class="lb-title"><i class="fas fa-${icon}"></i> ${title}</div>${arr.length ? arr.map(lbItem).join('') : '<p class="text-muted text-sm" style="padding:0.4rem 0;">No entries yet</p>'}</div>`;
+
+  // Venue selector - only show for admin
+  const venueSelectorHtml = isAdmin ? `
+    <div class="venue-selector">
+      <label><i class="fas fa-map-pin"></i> District</label>
+      <select id="venueFilter">
+        ${venues.map(v => `<option value="${esc(v)}" ${currentVenue===v?'selected':''}>${esc(v)}</option>`).join('')}
+      </select>
+    </div>
+  ` : `
+    <div class="venue-selector">
+      <label><i class="fas fa-map-pin"></i> District</label>
+      <span style="color:var(--gold);font-weight:600;font-size:0.85rem;">${esc(currentUserDistrict)}</span>
+    </div>
+  `;
 
   container.innerHTML = `
     <div class="archive-header">
       <h2 class="syne">Archive</h2>
+      ${venueSelectorHtml}
     </div>
     <div class="subtabs">
       <button class="stab ${currentSubtab==='reports'?'active':''}" id="stabReports">📋 Reports</button>
       <button class="stab ${currentSubtab==='leaderboard'?'active':''}" id="stabLeader">🏆 Rankings</button>
     </div>
-    <div id="subReports" ${currentSubtab!=='reports'?'style="display:none"':''}>
-      ${reportsHtml}
-    </div>
-    <div id="subLeader" ${currentSubtab!=='leaderboard'?'style="display:none"':''}>
-      ${lbSec('Beginner Division (S1/S2)', 'seedling', beginners)}
-      ${lbSec('Advanced Division (S4/S5)', 'rocket', advanced)}
+    <div id="subReports" ${currentSubtab!=='reports'?'style="display:none"':''}>${reportsHtml}</div>
+    <div id="subLeader"  ${currentSubtab!=='leaderboard'?'style="display:none"':''}>
+      ${lbSec('Beginner Division (S1/S2)','seedling',beginners)}
+      ${lbSec('Advanced Division (S4/S5)','rocket',advanced)}
     </div>`;
 
-  container.querySelector('#stabReports')?.addEventListener('click', () => { currentSubtab='reports'; renderAllPanels(); });
-  container.querySelector('#stabLeader')?.addEventListener('click', () => { currentSubtab='leaderboard'; renderAllPanels(); });
-
-  container.querySelectorAll('.view-btn').forEach(btn => {
-    btn.addEventListener('click', () => showReport(parseInt(btn.dataset.idx)));
-  });
-  container.querySelectorAll('.print-btn').forEach(btn => {
-    btn.addEventListener('click', () => printReport(parseInt(btn.dataset.idx)));
-  });
-  container.querySelectorAll('.del-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (confirm('Delete this evaluation permanently?')) {
-        db.delete(parseInt(btn.dataset.idx));
-        renderAllPanels();
-        toast('Evaluation deleted', 'error');
-      }
+  if (isAdmin) {
+    container.querySelector('#venueFilter')?.addEventListener('change', (e) => {
+      currentVenue = e.target.value;
+      candidate.venue = currentVenue;
+      renderAllPanels();
     });
-  });
+  }
+
+  container.querySelector('#stabReports')?.addEventListener('click', () => { currentSubtab='reports'; renderAllPanels(); });
+  container.querySelector('#stabLeader')?.addEventListener('click',  () => { currentSubtab='leaderboard'; renderAllPanels(); });
+  
+  container.querySelectorAll('.view-btn').forEach(btn  => btn.addEventListener('click', () => showReport(+btn.dataset.idx)));
+  container.querySelectorAll('.print-btn').forEach(btn => btn.addEventListener('click', () => printReport(+btn.dataset.idx)));
+  container.querySelectorAll('.edit-btn').forEach(btn => btn.addEventListener('click', () => editReport(+btn.dataset.idx)));
+  container.querySelectorAll('.del-btn').forEach(btn   => btn.addEventListener('click', () => {
+    if (confirm('Delete this evaluation permanently?')) { 
+      db.delete(+btn.dataset.idx); 
+      renderAllPanels(); 
+      showNotification('🗑️ Deleted', 'Evaluation has been removed.', 'error', 3000);
+    }
+  }));
+}
+
+// ─── EDIT REPORT ───
+function editReport(idx) {
+  const reports = db.reports();
+  const r = reports[idx];
+  if (!r) return;
+  
+  // Check if user can edit this report
+  if (!isAdmin && r.judge !== currentUser) {
+    showNotification('⛔ Access Denied', 'You can only edit your own evaluations.', 'error', 3000);
+    return;
+  }
+  
+  // Load data into editing state
+  editingIndex = idx;
+  candidate = {
+    name: r.candidateName || '',
+    school: r.school || '',
+    level: r.level || 'Beginner (S1/S2)',
+    theme: r.speechTheme || '',
+    title: r.speechTitle || '',
+    venue: r.venue || currentUserDistrict
+  };
+  scores = { ...r.scores };
+  comments = { ...r.comments };
+  currentVenue = r.venue || currentUserDistrict;
+  
+  // Update the rubric display
+  renderAllPanels();
+  showNotification('✏️ Edit Mode', `Editing evaluation for ${r.candidateName}`, 'info', 3000);
+  
+  // Switch to candidate tab
+  switchPanel('candidate');
 }
 
 // ─── RENDER ───
 function renderAllPanels() {
   const isWide = window.innerWidth >= 1024;
   const desktopLayout = document.getElementById('desktopLayout');
-  const mobilePanels = document.getElementById('mobilePanels');
+  const mobilePanels  = document.getElementById('mobilePanels');
 
   if (isWide) {
     desktopLayout.style.display = 'grid';
-    mobilePanels.style.display = 'none';
+    mobilePanels.style.display  = 'none';
     renderCandidatePanel(document.getElementById('panel-candidate-desk'));
     renderRubricPanel(document.getElementById('panel-rubric-desk'));
     renderArchivePanel(document.getElementById('panel-archive-desk'));
   } else {
     desktopLayout.style.display = 'none';
-    mobilePanels.style.display = 'block';
+    mobilePanels.style.display  = 'block';
     renderCandidatePanel(document.getElementById('panel-candidate'));
     renderRubricPanel(document.getElementById('panel-rubric'));
     renderArchivePanel(document.getElementById('panel-archive'));
     switchPanel(activeTab);
   }
-
-  // FAB visibility
-  const fab = document.getElementById('saveFab');
-  if (fab) fab.className = `save-fab${activeTab === 'rubric' || activeTab === 'candidate' ? ' visible' : ''}`;
+  updateTimerUI();
 }
 
 function switchPanel(tab) {
@@ -1090,133 +1573,72 @@ function switchPanel(tab) {
     document.querySelector(`.mnav-btn[data-panel="${t}"]`)?.classList.toggle('active', t === tab);
     document.querySelector(`.dtab[data-panel="${t}"]`)?.classList.toggle('active', t === tab);
   });
-  const fab = document.getElementById('saveFab');
-  if (fab) fab.className = `save-fab${tab === 'rubric' || tab === 'candidate' ? ' visible' : ''}`;
 }
 
-// ─── SAVE ───
-function saveEvaluation() {
-  // collect latest from DOM
-  const nameEl = document.querySelector('#cName') || document.querySelectorAll('[id="cName"]')[0];
-  if (nameEl) candidate.name = nameEl.value;
-  const schoolEl = document.querySelector('#cSchool');
-  if (schoolEl) candidate.school = schoolEl.value;
-  const levelEl = document.querySelector('#cLevel');
-  if (levelEl) candidate.level = levelEl.value;
-  const themeEl = document.querySelector('#cTheme');
-  if (themeEl) candidate.theme = themeEl.value;
-  const titleEl = document.querySelector('#cTitle');
-  if (titleEl) candidate.title = titleEl.value;
-
-  if (!candidate.name.trim()) { toast('Enter candidate name first', 'error'); return; }
-  const tot = total();
-  const perf = tot >= 45 ? 'Exceptional' : tot >= 33 ? 'Solid Performance' : 'Needs Improvement';
-  db.save({
-    id: Date.now(), judge: currentUser,
-    candidateName: candidate.name, school: candidate.school,
-    level: candidate.level, speechTheme: candidate.theme, speechTitle: candidate.title,
-    totalScore: tot, performanceLevel: perf,
-    scores: { ...scores }, comments: { ...comments },
-    timestamp: new Date().toLocaleString()
-  });
-  toast(`✅ Saved ${candidate.name} · ${tot}/50`);
-  renderAllPanels();
-}
-
-// ─── PRINT / PDF (builds a printable document and triggers browser print dialog) ───
+// ─── PRINT / PDF ───
 function buildPrintHtml(r) {
   const tot = r.totalScore;
   const perf = tot >= 45 ? 'Exceptional' : tot >= 33 ? 'Solid Performance' : 'Needs Improvement';
-
-  const rows = CRITERIA.map(c => {
-    const sv = r.scores[c.id] || 0;
-    const cm = r.comments[c.id] || '';
-    return `<tr>
-      <td>${esc(c.label)}</td>
-      <td style="text-align:center;">${sv} / 5</td>
-      <td class="comment">${cm ? esc(cm) : '—'}</td>
-    </tr>`;
-  }).join('');
-
+  const rows = CRITERIA.map(c => `<tr>
+    <td>${esc(c.label)}</td>
+    <td style="text-align:center;">${r.scores[c.id]||0} / 5</td>
+    <td class="comment">${r.comments[c.id] ? esc(r.comments[c.id]) : '—'}</td>
+  </tr>`).join('');
   return `
     <div class="pr-header">
       <div class="pr-logo">Orator<span>Judge</span> Pro</div>
-      <div style="text-align:right;font-size:0.75rem;color:#888;">
-        <div>Generated: ${new Date().toLocaleString()}</div>
-        <div>Judge: ${esc(r.judge)}</div>
-      </div>
+      <div style="text-align:right;font-size:0.75rem;color:#888;"><div>Generated: ${new Date().toLocaleString()}</div><div>Judge: ${esc(r.judge)}</div><div>District: ${esc(r.venue)}</div></div>
     </div>
     <h2 style="margin-bottom:10px;">Evaluation Report</h2>
     <div class="pr-grid">
       <div class="pr-field"><div class="lbl">Speaker</div><div class="val">${esc(r.candidateName)}</div></div>
       <div class="pr-field"><div class="lbl">School</div><div class="val">${esc(r.school)||'—'}</div></div>
       <div class="pr-field"><div class="lbl">Level</div><div class="val">${esc(r.level)}</div></div>
+      <div class="pr-field"><div class="lbl">District</div><div class="val">${esc(r.venue)}</div></div>
       <div class="pr-field"><div class="lbl">Speech Title</div><div class="val">${esc(r.speechTitle)||'—'}</div></div>
-      <div class="pr-field"><div class="lbl">Theme</div><div class="val">${esc(r.speechTheme)||'—'}</div></div>
       <div class="pr-field"><div class="lbl">Date Judged</div><div class="val">${esc(r.timestamp)}</div></div>
     </div>
-    <div class="pr-score-box">
-      <div class="big">${tot} / 50</div>
-      <div>${perf}</div>
-    </div>
+    <div class="pr-score-box"><div class="big">${tot} / 50</div><div>${perf}</div></div>
     <table class="pr-table">
       <thead><tr><th>Criteria</th><th style="width:70px;text-align:center;">Score</th><th>Judge's Note</th></tr></thead>
       <tbody>${rows}</tbody>
     </table>
-    <div class="pr-footer">OratorJudge Pro · Professional Speech Evaluation Platform</div>
-  `;
+    <div class="pr-footer">OratorJudge Pro · Professional Speech Evaluation Platform</div>`;
 }
-
 function printReport(idx) {
-  const r = db.reports()[idx];
-  if (!r) return;
-  const printArea = document.getElementById('printArea');
-  printArea.innerHTML = buildPrintHtml(r);
-  setTimeout(() => {
-    window.print();
-  }, 50);
+  const r = db.reports()[idx]; if (!r) return;
+  document.getElementById('printArea').innerHTML = buildPrintHtml(r);
+  setTimeout(() => window.print(), 50);
 }
 
 // ─── REPORT MODAL ───
 function showReport(idx) {
-  const r = db.reports()[idx];
-  if (!r) return;
+  const r = db.reports()[idx]; if (!r) return;
   const tot = r.totalScore;
   const perf = tot >= 45 ? 'Exceptional' : tot >= 33 ? 'Solid Performance' : 'Needs Improvement';
   const pfColor = tot >= 45 ? '#4ade80' : tot >= 33 ? '#60a5fa' : '#fb923c';
-
   const breakdown = CRITERIA.map(c => {
-    const sv = r.scores[c.id] || 0;
     const cm = r.comments[c.id] || '';
     return `<div class="breakdown-item">
-      <div style="flex:1;min-width:0;">
-        <div class="bd-label">${c.label}</div>
-        ${cm ? `<div class="bd-comment">"${esc(cm)}"</div>` : ''}
-      </div>
-      <div class="bd-score">${sv}/5</div>
+      <div style="flex:1;min-width:0;"><div class="bd-label">${c.label}</div>${cm?`<div class="bd-comment">"${esc(cm)}"</div>`:''}</div>
+      <div class="bd-score">${r.scores[c.id]||0}/5</div>
     </div>`;
   }).join('');
-
   const overlay = document.createElement('div');
   overlay.className = 'modal-overlay';
   overlay.innerHTML = `<div class="modal-card">
-    <div class="modal-header">
-      <h3 class="syne">Evaluation Report</h3>
-      <button class="modal-close" id="closeModal"><i class="fas fa-times"></i></button>
-    </div>
+    <div class="modal-header"><h3 class="syne">Evaluation Report</h3><button class="modal-close" id="closeModal"><i class="fas fa-times"></i></button></div>
     <div class="report-grid">
       <div class="report-field"><div class="lbl">Speaker</div><div class="val">${esc(r.candidateName)}</div></div>
       <div class="report-field"><div class="lbl">School</div><div class="val">${esc(r.school)||'—'}</div></div>
       <div class="report-field"><div class="lbl">Level</div><div class="val">${r.level}</div></div>
+      <div class="report-field"><div class="lbl">District</div><div class="val">${esc(r.venue)}</div></div>
       <div class="report-field"><div class="lbl">Judge</div><div class="val">${r.judge}</div></div>
       <div class="report-field"><div class="lbl">Date</div><div class="val">${r.timestamp}</div></div>
-      <div class="report-field"><div class="lbl">Speech Title</div><div class="val">${esc(r.speechTitle)||'—'}</div></div>
+      <div class="report-field" style="grid-column: span 2;"><div class="lbl">Speech Title</div><div class="val">${esc(r.speechTitle)||'—'}</div></div>
     </div>
-    <div class="final-score-box">
-      <div class="big">${tot}</div>
-      <div class="out">out of 50</div>
-      <div><span class="perf-badge" style="background:${pfColor}22;border-color:${pfColor}55;color:${pfColor};">${perf}</span></div>
-    </div>
+    <div class="final-score-box"><div class="big">${tot}</div><div class="out">out of 50</div>
+      <div><span class="perf-badge" style="background:${pfColor}22;border-color:${pfColor}55;color:${pfColor};">${perf}</span></div></div>
     <div style="font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:0.6rem;">Score Breakdown</div>
     ${breakdown}
     <div style="display:flex;gap:0.6rem;margin-top:1rem;flex-wrap:wrap;">
@@ -1225,79 +1647,204 @@ function showReport(idx) {
     </div>
   </div>`;
   document.body.appendChild(overlay);
-  overlay.querySelector('#closeModal').addEventListener('click', () => overlay.remove());
+  overlay.querySelector('#closeModal').addEventListener('click',    () => overlay.remove());
   overlay.querySelector('#closeModalBtn2').addEventListener('click', () => overlay.remove());
-  overlay.querySelector('#printModalBtn').addEventListener('click', () => printReport(idx));
-  overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
+  overlay.querySelector('#printModalBtn').addEventListener('click',  () => printReport(idx));
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
 }
 
 // ─── APP INIT ───
 function initApp() {
-  const topbarUser = document.getElementById('topbarUser');
-  const userAvatar = document.getElementById('userAvatar');
-  if (topbarUser) topbarUser.textContent = currentUser;
-  if (userAvatar) userAvatar.textContent = currentUser[0].toUpperCase();
+  document.getElementById('topbarUser').textContent = currentUser;
+  document.getElementById('userAvatar').textContent = currentUser[0].toUpperCase();
+  document.getElementById('userDistrict').textContent = isAdmin ? '👑 Admin' : currentUserDistrict;
+  
+  if (isAdmin) {
+    document.getElementById('adminBadge').classList.remove('hidden');
+  }
 
-  // mobile nav
-  document.querySelectorAll('.mnav-btn').forEach(btn => {
-    btn.addEventListener('click', () => { switchPanel(btn.dataset.panel); });
-  });
-  // desktop tabs
-  document.querySelectorAll('.dtab').forEach(btn => {
-    btn.addEventListener('click', () => { switchPanel(btn.dataset.panel); });
-  });
+  document.querySelectorAll('.mnav-btn').forEach(btn => btn.addEventListener('click', () => switchPanel(btn.dataset.panel)));
+  document.querySelectorAll('.dtab').forEach(btn     => btn.addEventListener('click', () => switchPanel(btn.dataset.panel)));
 
-  document.getElementById('logoutBtn')?.addEventListener('click', () => {
-    currentUser = null; scores = {}; comments = {}; initScores();
-    candidate = { name: '', school: '', level: 'Beginner (S1/S2)', theme: '', title: '' };
+  // Remove existing logout event listeners to prevent duplicates
+  const logoutBtn = document.getElementById('logoutBtn');
+  const newLogoutBtn = logoutBtn.cloneNode(true);
+  logoutBtn.parentNode.replaceChild(newLogoutBtn, logoutBtn);
+  
+  newLogoutBtn.addEventListener('click', () => {
+    // Clear all data
+    currentUser = null; 
+    currentUserDistrict = null;
+    isAdmin = false;
+    scores = {}; 
+    comments = {}; 
+    initScores();
+    editingIndex = null;
+    candidate = { name:'', school:'', level:'Beginner (S1/S2)', theme:'', title:'', venue: RWANDAN_DISTRICTS[0] };
+    resetTimer();
+    
+    // Hide main screen, show login
     document.getElementById('mainScreen').classList.add('hidden');
     document.getElementById('loginScreen').classList.remove('hidden');
+    
+    // Clear any existing notifications
+    const container = document.getElementById('notificationContainer');
+    if (container) {
+      container.innerHTML = '';
+    }
+    
+    // Show single logout notification
+    showNotification('👋 Logged Out', 'You have been signed out successfully.', 'info', 3000);
   });
 
-  document.getElementById('saveFabBtn')?.addEventListener('click', saveEvaluation);
+  // Timer event listeners
+  const timerWrap = document.getElementById('timerWrap');
+  const timerStartBtn = document.getElementById('timerStartBtn');
+  const timerResetBtn = document.getElementById('timerResetBtn');
+  
+  // Remove existing listeners by cloning
+  const newTimerWrap = timerWrap.cloneNode(true);
+  timerWrap.parentNode.replaceChild(newTimerWrap, timerWrap);
+  
+  const newTimerStartBtn = document.getElementById('timerStartBtn');
+  const newTimerResetBtn = document.getElementById('timerResetBtn');
+  
+  newTimerWrap.addEventListener('click', (e) => {
+    if (!e.target.closest('.timer-ctrl-btn')) {
+      toggleTimer();
+    }
+  });
+  
+  newTimerStartBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleTimer();
+  });
+  
+  newTimerResetBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    resetTimer();
+  });
 
+  updateTimerUI();
   renderAllPanels();
 
-  // responsive re-render
   let resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(renderAllPanels, 100);
+  window.addEventListener('resize', () => { 
+    clearTimeout(resizeTimer); 
+    resizeTimer = setTimeout(renderAllPanels, 100); 
   });
 }
+
+// ─── POPULATE DISTRICT DROPDOWN ───
+function populateDistrictDropdown() {
+  const select = document.getElementById('regDistrict');
+  if (!select) return;
+  select.innerHTML = '<option value="">Select your district...</option>';
+  RWANDAN_DISTRICTS.forEach(d => {
+    select.innerHTML += `<option value="${d}">${d}</option>`;
+  });
+}
+
+// ─── AUTH TOGGLE ───
+document.getElementById('showSignupBtn').addEventListener('click', () => {
+  document.getElementById('loginForm').classList.add('hidden');
+  document.getElementById('signupForm').classList.remove('hidden');
+  document.getElementById('loginError').className = 'hidden';
+  populateDistrictDropdown();
+});
+
+document.getElementById('showLoginBtn').addEventListener('click', () => {
+  document.getElementById('loginForm').classList.remove('hidden');
+  document.getElementById('signupForm').classList.add('hidden');
+  document.getElementById('loginError').className = 'hidden';
+});
 
 // ─── LOGIN ───
 document.getElementById('loginBtn').addEventListener('click', () => {
   const u = document.getElementById('loginUsername').value.trim();
   const p = document.getElementById('loginPassword').value.trim();
-  if (db.auth(u, p)) {
-    currentUser = u;
+  
+  // Check admin credentials first
+  if (u === ADMIN_USER && p === ADMIN_PASS) {
+    currentUser = ADMIN_USER;
+    currentUserDistrict = 'All Districts';
+    isAdmin = true;
+    currentVenue = RWANDAN_DISTRICTS[0];
+    candidate.venue = currentVenue;
+    
     document.getElementById('loginScreen').classList.add('hidden');
     document.getElementById('mainScreen').classList.remove('hidden');
     initApp();
+    showNotification('👑 Welcome Admin', 'You have full access to all districts.', 'success', 4000);
+    return;
+  }
+  
+  // Check regular users
+  const user = db.auth(u, p);
+  if (user) {
+    currentUser = u;
+    currentUserDistrict = user.district || null;
+    isAdmin = user.isAdmin || false;
+    currentVenue = currentUserDistrict;
+    candidate.venue = currentVenue;
+    
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('mainScreen').classList.remove('hidden');
+    initApp();
+    showNotification('🎤 Welcome Back', `Signed in as Judge for ${currentUserDistrict}.`, 'success', 4000);
   } else {
     const err = document.getElementById('loginError');
     err.className = 'error-banner';
-    err.innerHTML = '<i class="fas fa-lock"></i> Invalid credentials — try <strong>judge1</strong> / <strong>judge123</strong>';
+    err.innerHTML = '<i class="fas fa-lock"></i> Invalid credentials. Please try again.';
+    showNotification('❌ Login Failed', 'Invalid username or password.', 'error', 3000);
   }
 });
 
-document.getElementById('loginPassword').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('loginBtn').click(); });
-
-document.getElementById('showRegBtn').addEventListener('click', () => {
-  document.getElementById('regPanel').classList.toggle('hidden');
+document.getElementById('loginPassword').addEventListener('keydown', (e) => { 
+  if (e.key === 'Enter') document.getElementById('loginBtn').click(); 
 });
 
+// ─── SIGNUP ───
 document.getElementById('doRegBtn').addEventListener('click', () => {
   const u = document.getElementById('regUser').value.trim();
   const p = document.getElementById('regPass').value.trim();
-  if (u && p && db.register(u, p)) {
-    toast('Account created! Please sign in.');
-    document.getElementById('regPanel').classList.add('hidden');
+  const district = document.getElementById('regDistrict').value;
+  
+  if (!u || !p) {
+    showNotification('⚠️ Error', 'Please fill in all fields.', 'error', 3000);
+    return;
+  }
+  
+  if (!district) {
+    showNotification('⚠️ Error', 'Please select your district.', 'error', 3000);
+    return;
+  }
+  
+  if (db.register(u, p, district)) {
+    showNotification('✅ Account Created', `Welcome! You can now sign in as a judge for ${district}.`, 'success', 4000);
+    document.getElementById('loginForm').classList.remove('hidden');
+    document.getElementById('signupForm').classList.add('hidden');
+    document.getElementById('loginUsername').value = u;
+    document.getElementById('loginPassword').value = '';
+    document.getElementById('loginError').className = 'hidden';
   } else {
-    toast('Username already taken or fields empty', 'error');
+    showNotification('⚠️ Error', 'Username already taken. Please choose another.', 'error', 3000);
   }
 });
+
+document.getElementById('regPass').addEventListener('keydown', (e) => { 
+  if (e.key === 'Enter') document.getElementById('doRegBtn').click(); 
+});
+
+// Initialize district dropdown on page load
+populateDistrictDropdown();
+
+// ─── WELCOME NOTIFICATION ───
+setTimeout(() => {
+  showNotification('🎯 Welcome to OratorJudge Pro', 
+    'Admin: iDebate / Rwanda | Regular: judge1 / judge123', 
+    'info', 6000);
+}, 600);
 </script>
 </body>
 </html>

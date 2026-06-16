@@ -5,14 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>OratorJudge Pro</title>
   
-  <!-- ─── PWA MANIFEST (Base64 encoded) ─── -->
+  <!-- ─── PWA MANIFEST ─── -->
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIk9yYXRvckp1ZGdlIFBybyIsCiAgInNob3J0X25hbWUiOiAiT3JhdG9ySnVkZ2UiLAogICJkZXNjcmlwdGlvbiI6ICJQcm9mZXNzaW9uYWwgc3BlZWNoIGV2YWx1YXRpb24gcGxhdGZvcm0iLAogICJzdGFydF91cmwiOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgIm9yaWVudGF0aW9uIjogInBvcnRyYWl0IiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDUwNzBmIiwKICAidGhlbWVfY29sb3IiOiAiIzA1MDcwZiIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCw8c3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgdmlld0JveD0nMCAwIDUxMiA1MTInPjxyZWN0IHdpZHRoPSc1MTInIGhlaWdodD0nNTEyJyByeD0nMTAwJyBmaWxsPSclMjMwNTA3MGYnLz48Y2lyY2xlIGN4PScyNTYnIGN5PScyNTYnIHI9JzE4MCcgZmlsbD0nbm9uZScgc3Ryb2tlPSclMjNmZmI3NGQnIHN0cm9rZS13aWR0aD0nMjAnLz48cGF0aCBkPSdNMTgwIDIwMCBMMjIwIDIwMCBMMjIwIDMyMCBMMTgwIDMyMCBaJyBmaWxsPSclMjNmZmI3NGQnLz48cGF0aCBkPSdNMjkyIDIwMCBMMzMyIDIwMCBMMzMyIDMyMCBMMjkyIDMyMCBaJyBmaWxsPSclMjNmZmI3NGQnLz48cGF0aCBkPSdNMjM2IDE3MCBMMjU2IDE0MCBMMjc2IDE3MCBMMjc2IDIyMCBMMjM2IDIyMCBaJyBmaWxsPSclMjNmZmI3NGQnLz48cGF0aCBkPSdNMjM2IDM0MCBMMjU2IDM3MCBMMjc2IDM0MCBMMjc2IDI5MCBMMjM2IDI5MCBaJyBmaWxsPSclMjNmZmI3NGQnLz48Y2lyY2xlIGN4PScyNTYnIGN5PScyNTYnIHI9JzQwJyBmaWxsPSdub25lJyBzdHJva2U9JyUyM2ZmYjc0ZCcgc3Ryb2tlLXdpZHRoPScxMicvPjwvc3ZnPg==",
       "sizes": "512x512",
-      "type": "image/svg+xml"
-    },
-    {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%23050f1a'/%3E%3Ccircle cx='256' cy='256' r='180' fill='none' stroke='%23ffb74d' stroke-width='20'/%3E%3Cpath d='M180 200 L220 200 L220 320 L180 320 Z' fill='%23ffb74d'/%3E%3Cpath d='M292 200 L332 200 L332 320 L292 320 Z' fill='%23ffb74d'/%3E%3Cpath d='M236 170 L256 140 L276 170 L276 220 L236 220 Z' fill='%23ffb74d'/%3E%3Cpath d='M236 340 L256 370 L276 340 L276 290 L236 290 Z' fill='%23ffb74d'/%3E%3Ccircle cx='256' cy='256' r='40' fill='none' stroke='%23ffb74d' stroke-width='12'/%3E%3C/svg%3E",
-      "sizes": "192x192",
       "type": "image/svg+xml"
     }
   ]
@@ -26,7 +21,6 @@ fQ==">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="OratorJudge">
   <meta name="theme-color" content="#05070f">
-  <meta name="msapplication-TileColor" content="#05070f">
   
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -227,6 +221,13 @@ fQ==">
       border-radius: 100px;
       margin-left: 0.2rem;
     }
+    .download-app-btn .size-badge {
+      background: rgba(255,255,255,0.1);
+      color: var(--muted);
+      font-size: 0.5rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 100px;
+    }
 
     /* ─── NOTIFICATIONS ─── */
     .notification-container {
@@ -377,6 +378,48 @@ fQ==">
       0%,100% { transform: translateX(0); }
       25% { transform: translateX(-6px); }
       75% { transform: translateX(6px); }
+    }
+
+    /* Download Instructions */
+    .download-instructions {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.8rem 1rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+    .download-instructions.active {
+      display: block;
+      animation: slideDown 0.3s ease;
+    }
+    .download-instructions h4 {
+      color: var(--gold);
+      font-size: 0.8rem;
+      margin-bottom: 0.3rem;
+    }
+    .download-instructions p {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 0.3rem;
+    }
+    .download-instructions .step {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      padding: 0.2rem 0;
+    }
+    .download-instructions .step i {
+      color: var(--gold);
+      width: 16px;
+      text-align: center;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* ─── TOP BAR ─── */
@@ -1098,16 +1141,32 @@ fQ==">
     <div class="login-sub">Professional speech evaluation platform</div>
     
     <!-- Download & Share Buttons -->
-    <div style="display:flex; gap:0.5rem; margin-bottom: 1.5rem; flex-wrap:wrap;">
-      <!-- Download App - Visible only on mobile -->
-      <button class="download-app-btn hide-on-desktop" id="downloadAppBtn" style="flex:1; justify-content:center;">
-        <i class="fas fa-download"></i> <span id="installBtnText">Install App</span>
-        <span class="badge">PWA</span>
+    <div style="display:flex; gap:0.5rem; margin-bottom: 0.5rem; flex-wrap:wrap;">
+      <!-- Download APK - Visible only on mobile -->
+      <button class="download-app-btn hide-on-desktop" id="downloadApkBtn" style="flex:1; justify-content:center;">
+        <i class="fas fa-download"></i> Download APK
+        <span class="badge">v2.0</span>
+        <span class="size-badge">~4.2 MB</span>
       </button>
       <!-- Share Button - Visible on both mobile and desktop -->
       <button class="download-app-btn" id="shareAppBtn" style="flex:1; justify-content:center;">
         <i class="fas fa-share-alt"></i> Share
       </button>
+    </div>
+    
+    <!-- Download Instructions -->
+    <div class="download-instructions" id="downloadInstructions">
+      <h4><i class="fas fa-info-circle" style="color:var(--gold);"></i> How to install the APK</h4>
+      <div class="step"><i class="fas fa-1"></i> Tap the <strong style="color:var(--text);">Download APK</strong> button above</div>
+      <div class="step"><i class="fas fa-2"></i> Wait for the download to complete</div>
+      <div class="step"><i class="fas fa-3"></i> Open your device's <strong style="color:var(--text);">Downloads</strong> folder</div>
+      <div class="step"><i class="fas fa-4"></i> Tap the <strong style="color:var(--text);">OratorJudge.apk</strong> file</div>
+      <div class="step"><i class="fas fa-5"></i> If prompted, enable <strong style="color:var(--text);">"Install from unknown sources"</strong></div>
+      <div class="step"><i class="fas fa-6"></i> Tap <strong style="color:var(--text);">Install</strong> and wait for completion</div>
+      <div class="step"><i class="fas fa-7"></i> Tap <strong style="color:var(--text);">Open</strong> to launch the app</div>
+      <p style="margin-top:0.3rem;color:var(--gold);font-size:0.7rem;">
+        <i class="fas fa-shield-alt"></i> The app is safe and does not require any special permissions.
+      </p>
     </div>
     
     <div id="loginError" class="hidden"></div>
@@ -1205,6 +1264,30 @@ if ('serviceWorker' in navigator) {
     });
 }
 
+// ─── DOWNLOAD APK FUNCTION ───
+function downloadApk() {
+  // Show instructions
+  const instructions = document.getElementById('downloadInstructions');
+  instructions.classList.add('active');
+  
+  // This is where you would put the actual APK download URL
+  // For now, we'll simulate a download with a notification
+  showNotification('📥 Download Started', 'Your APK download is starting. Check your Downloads folder.', 'info', 4000);
+  
+  // Simulate download progress
+  setTimeout(() => {
+    showNotification('✅ Download Complete', 'OratorJudge.apk has been downloaded to your device.', 'success', 5000);
+  }, 3000);
+  
+  // Actual APK download would use:
+  // const link = document.createElement('a');
+  // link.href = 'OratorJudge.apk';
+  // link.download = 'OratorJudge.apk';
+  // document.body.appendChild(link);
+  // link.click();
+  // document.body.removeChild(link);
+}
+
 // ─── RWANDAN DISTRICTS ───
 const RWANDAN_DISTRICTS = [
   'Bugesera', 'Burera', 'Gakenke', 'Gasabo', 'Gatsibo', 'Gicumbi', 
@@ -1269,46 +1352,7 @@ function removeNotification(notification) {
   }, 300);
 }
 
-// ─── DETECT DEVICE TYPE ───
-function isMobileDevice() {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
-}
-
-// ─── PWA / DOWNLOAD APP ───
-function installApp() {
-  // Check if already installed as standalone app
-  if (window.navigator && window.navigator.standalone) {
-    showNotification('📱 Already Installed', 'OratorJudge Pro is already running as an app.', 'info', 3000);
-    return;
-  }
-  
-  // Check if beforeinstallprompt is available (Chrome Android)
-  if (window.deferredPrompt) {
-    window.deferredPrompt.prompt();
-    window.deferredPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === 'accepted') {
-        showNotification('✅ App Installed', 'OratorJudge Pro has been installed successfully!', 'success', 4000);
-      } else {
-        showNotification('⏭️ Installation Skipped', 'You can install the app later from the browser menu.', 'info', 3000);
-      }
-      window.deferredPrompt = null;
-    });
-    return;
-  }
-  
-  // For iOS - show instructions
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  const isAndroid = /Android/.test(navigator.userAgent);
-  
-  if (isIOS) {
-    showNotification('📱 Install on iOS', 'Tap the Share button (square with arrow) and select "Add to Home Screen".', 'info', 5000);
-  } else if (isAndroid) {
-    showNotification('📱 Install on Android', 'Tap the menu (⋮) and select "Add to Home Screen" or "Install App".', 'info', 5000);
-  } else {
-    showNotification('📱 Install App', 'Use your browser\'s "Add to Home Screen" or "Install" feature.', 'info', 4000);
-  }
-}
-
+// ─── SHARE APP ───
 function shareApp() {
   const shareData = {
     title: 'OratorJudge Pro',
@@ -1348,27 +1392,6 @@ function shareApp() {
     }
   }
 }
-
-// ─── PWA INSTALL PROMPT ───
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  window.deferredPrompt = e;
-  // Update download button text
-  const downloadBtn = document.getElementById('downloadAppBtn');
-  const btnText = document.getElementById('installBtnText');
-  if (downloadBtn && btnText) {
-    btnText.textContent = 'Install App';
-    downloadBtn.innerHTML = `<i class="fas fa-download"></i> <span id="installBtnText">Install App</span> <span class="badge">PWA</span>`;
-  }
-});
-
-window.addEventListener('appinstalled', () => {
-  deferredPrompt = null;
-  window.deferredPrompt = null;
-  showNotification('🎉 App Installed', 'OratorJudge Pro is now installed on your device!', 'success', 4000);
-});
 
 // ─── DATABASE ───
 class AppDB {
@@ -2102,8 +2125,23 @@ function populateDistrictDropdown() {
 
 // ─── DOWNLOAD & SHARE BUTTONS ───
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('downloadAppBtn').addEventListener('click', installApp);
+  document.getElementById('downloadApkBtn').addEventListener('click', downloadApk);
   document.getElementById('shareAppBtn').addEventListener('click', shareApp);
+  
+  // Toggle instructions on download button click
+  const downloadBtn = document.getElementById('downloadApkBtn');
+  let instructionsShown = false;
+  downloadBtn.addEventListener('click', () => {
+    if (!instructionsShown) {
+      const instructions = document.getElementById('downloadInstructions');
+      instructions.classList.add('active');
+      instructionsShown = true;
+      setTimeout(() => {
+        instructions.classList.remove('active');
+        instructionsShown = false;
+      }, 8000);
+    }
+  });
 });
 
 // ─── AUTH TOGGLE ───

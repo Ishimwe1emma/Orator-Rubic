@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title>OratorJudge Pro</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -37,6 +37,7 @@
       font-family: 'DM Sans', sans-serif;
       min-height: 100dvh;
       overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body::before {
@@ -95,8 +96,10 @@
       font-size: 0.9rem;
       transition: border-color var(--transition), box-shadow var(--transition);
       -webkit-appearance: none;
+      appearance: none;
       -webkit-user-select: text;
       user-select: text;
+      touch-action: manipulation;
     }
     .field input:focus, .field select:focus, .field textarea:focus {
       outline: none;
@@ -128,6 +131,7 @@
       white-space: nowrap;
       letter-spacing: 0.02em;
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     .btn-primary {
       background: linear-gradient(135deg, var(--gold) 0%, #ff9f1c 100%);
@@ -376,6 +380,7 @@
       position: relative;
       flex-shrink: 0;
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     .timer-wrap:hover { border-color: rgba(255,255,255,0.15); }
     .timer-label {
@@ -406,11 +411,15 @@
       background: rgba(255,255,255,0.06);
       border: none;
       border-radius: 4px;
-      color: var(--muted); font-size: 0.55rem;
+      color: var(--muted);
+      font-size: 0.55rem;
       cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: background var(--transition), color var(--transition);
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     .timer-ctrl-btn:hover { background: rgba(255,255,255,0.12); color: var(--text); }
 
@@ -455,6 +464,7 @@
       border-radius: var(--radius-sm);
       transition: color var(--transition), background var(--transition);
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     .mnav-btn i { font-size: 1.1rem; }
     .mnav-btn.active { color: var(--gold); background: var(--gold-dim); }
@@ -484,6 +494,7 @@
       color: var(--muted); cursor: pointer;
       transition: all var(--transition);
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     .dtab.active { background: var(--gold-dim); border-color: var(--border-active); color: var(--gold2); }
 
@@ -499,15 +510,42 @@
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 
     /* ─── RUBRIC PANEL ─── */
-    .rubric-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
+    .rubric-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 500px;
+    }
+
+    .rubric-header { 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      margin-bottom: 1rem; 
+      flex-wrap: wrap; 
+      gap: 0.5rem; 
+      flex-shrink: 0;
+    }
     .rubric-header h2 { font-size: 1.15rem; font-weight: 800; }
+    
+    .rubric-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--bg);
+      padding: 0.25rem 0 0.75rem 0;
+      flex-shrink: 0;
+    }
+
     .progress-wrap {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 1rem 1.25rem;
-      margin-bottom: 1rem;
-      display: flex; align-items: center; gap: 1.2rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
       flex-wrap: wrap;
     }
     .score-arc { position: relative; width: 72px; height: 72px; flex-shrink: 0; }
@@ -525,6 +563,16 @@
     .bar-label { width: 60px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .bar-val { width: 22px; text-align: right; color: var(--gold); font-weight: 600; font-size: 0.7rem; }
 
+    .criteria-scroll {
+      flex: 1;
+      overflow-y: auto;
+      max-height: 400px;
+      padding-right: 4px;
+    }
+    .criteria-scroll::-webkit-scrollbar { width: 4px; }
+    .criteria-scroll::-webkit-scrollbar-track { background: transparent; }
+    .criteria-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 100px; }
+
     .criteria-item {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -535,9 +583,14 @@
     }
     .criteria-item.scored { border-color: rgba(255,183,77,0.25); }
     .criteria-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0.85rem 1rem; cursor: pointer; gap: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1rem;
+      cursor: pointer;
+      gap: 0.75rem;
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     .criteria-name { font-weight: 600; font-size: 0.88rem; flex: 1; }
     .criteria-score-badge {
@@ -546,7 +599,8 @@
       border-radius: 100px;
       padding: 0.15rem 0.6rem;
       font-family: 'Syne', sans-serif;
-      font-weight: 700; font-size: 0.75rem;
+      font-weight: 700;
+      font-size: 0.75rem;
       color: var(--muted);
       transition: all 0.2s;
       white-space: nowrap;
@@ -568,25 +622,45 @@
       line-height: 1.5;
     }
     .score-stepper {
-      display: flex; align-items: center; gap: 0; border: 1px solid var(--border);
-      border-radius: var(--radius-sm); overflow: hidden; width: fit-content;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      width: fit-content;
       margin-bottom: 0.8rem;
     }
     .stepper-btn {
-      width: 40px; height: 40px;
-      background: var(--bg2); border: none; cursor: pointer;
-      color: var(--muted); font-size: 1rem; font-weight: 700;
+      width: 40px;
+      height: 40px;
+      background: var(--bg2);
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 1rem;
+      font-weight: 700;
       transition: background var(--transition), color var(--transition);
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     .stepper-btn:hover { background: rgba(255,255,255,0.07); color: var(--text); }
     .stepper-btn:active { background: rgba(255,255,255,0.12); }
     .stepper-val {
-      min-width: 56px; height: 40px;
-      display: flex; align-items: center; justify-content: center;
-      background: var(--bg); border-left: 1px solid var(--border); border-right: 1px solid var(--border);
-      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem;
+      min-width: 56px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
       color: var(--gold2);
     }
     .criteria-item .field textarea { background: var(--bg); }
@@ -598,6 +672,7 @@
       margin-top: 1rem;
       padding-top: 1rem;
       border-top: 1px solid var(--border);
+      flex-shrink: 0;
     }
     .action-bar .btn { flex: 1; }
 
@@ -640,6 +715,7 @@
       font-family: 'Syne', sans-serif;
       transition: all var(--transition);
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     .stab.active { background: var(--gold-dim); border-color: var(--border-active); color: var(--gold2); }
 
@@ -669,7 +745,8 @@
       border-radius: 100px;
       padding: 0.2rem 0.7rem;
       font-family: 'Syne', sans-serif;
-      font-weight: 800; font-size: 0.82rem;
+      font-weight: 800;
+      font-size: 0.82rem;
       color: var(--gold2);
       white-space: nowrap;
     }
@@ -687,7 +764,8 @@
       display: flex; align-items: center; gap: 0.75rem;
       padding: 0.65rem 0.8rem;
       border-radius: var(--radius-sm);
-      background: var(--surface); margin-bottom: 0.4rem;
+      background: var(--surface);
+      margin-bottom: 0.4rem;
       transition: background var(--transition);
     }
     .lb-item:hover { background: var(--surface2); }
@@ -731,6 +809,7 @@
       cursor: pointer; display: flex; align-items: center; justify-content: center;
       color: var(--muted); transition: all var(--transition);
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     .modal-close:hover { color: var(--text); }
     .report-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 1rem; }
@@ -779,6 +858,7 @@
       .panel { padding: 1.5rem; }
       .report-grid { grid-template-columns: repeat(3, 1fr); }
       .notification-container { top: 1.5rem; right: 1.5rem; }
+      .criteria-scroll { max-height: 500px; }
     }
 
     @media (min-width: 1024px) {
@@ -797,6 +877,7 @@
       .desktop-tabs { display: none; }
       .mobile-nav { display: none; }
       #mainScreen { padding-bottom: 2rem; }
+      .criteria-scroll { max-height: 550px; }
     }
 
     /* ─── SCROLL ─── */
@@ -851,6 +932,7 @@
       .venue-selector { flex-wrap: wrap; }
       .venue-selector select { max-width: 100%; }
       .notification-container { top: 0.5rem; right: 0.5rem; max-width: calc(100% - 1rem); }
+      .criteria-scroll { max-height: 300px; }
     }
 
     /* Fix for mobile input focus issues */
@@ -858,6 +940,15 @@
       -webkit-user-select: text !important;
       user-select: text !important;
       touch-action: manipulation !important;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    /* Prevent zoom on focus for mobile */
+    @media (max-width: 768px) {
+      input, select, textarea {
+        font-size: 16px !important;
+      }
     }
   </style>
 </head>
@@ -1311,16 +1402,16 @@ function renderCandidatePanel(container) {
           ${venueOptions}
         </select>
       </div>
-      <div class="field"><label>Full Name *</label><input type="text" id="cName" placeholder="Speaker's full name" value="${esc(candidate.name)}"></div>
+      <div class="field"><label>Full Name *</label><input type="text" id="cName" placeholder="Speaker's full name" value="${esc(candidate.name)}" autocomplete="off"></div>
       <div class="two-col">
-        <div class="field"><label>School / Institution *</label><input type="text" id="cSchool" placeholder="School name" value="${esc(candidate.school)}"></div>
+        <div class="field"><label>School / Institution *</label><input type="text" id="cSchool" placeholder="School name" value="${esc(candidate.school)}" autocomplete="off"></div>
         <div class="field"><label>Level</label><select id="cLevel">
           <option value="Beginner (S1/S2)" ${candidate.level==='Beginner (S1/S2)'?'selected':''}>🎓 Beginner (S1/S2)</option>
           <option value="Advanced (S4/S5)" ${candidate.level==='Advanced (S4/S5)'?'selected':''}>🚀 Advanced (S4/S5)</option>
         </select></div>
       </div>
-      <div class="field"><label>Speech Theme *</label><input type="text" id="cTheme" placeholder="e.g. Leadership, Environment" value="${esc(candidate.theme)}"></div>
-      <div class="field" style="margin-bottom:0;"><label>Speech Title *</label><input type="text" id="cTitle" placeholder="Title of the speech" value="${esc(candidate.title)}"></div>
+      <div class="field"><label>Speech Theme *</label><input type="text" id="cTheme" placeholder="e.g. Leadership, Environment" value="${esc(candidate.theme)}" autocomplete="off"></div>
+      <div class="field" style="margin-bottom:0;"><label>Speech Title *</label><input type="text" id="cTitle" placeholder="Title of the speech" value="${esc(candidate.title)}" autocomplete="off"></div>
       ${editingIndex !== null ? `<div style="margin-top:0.5rem;font-size:0.75rem;color:var(--gold);"><i class="fas fa-pen"></i> Editing report #${editingIndex + 1}</div>` : ''}
     </div>`;
 
@@ -1365,38 +1456,46 @@ function renderRubricPanel(container) {
           </div>
         </div>
         <div class="field"><label><i class="fas fa-comment-dots" style="margin-right:4px;color:var(--gold);"></i> Judge's note</label>
-          <textarea data-comment="${c.id}" rows="2" placeholder="Constructive feedback...">${esc(comments[c.id])}</textarea>
+          <textarea data-comment="${c.id}" rows="2" placeholder="Constructive feedback..." autocomplete="off">${esc(comments[c.id])}</textarea>
         </div>
       </div>
     </div>`;
   }).join('');
 
   container.innerHTML = `
-    <div class="rubric-header">
-      <h2 class="syne">${editingIndex !== null ? '✏️ Edit Scores' : 'Scoring Rubric'}</h2>
-      ${editingIndex !== null ? `<span style="font-size:0.75rem;color:var(--gold);"><i class="fas fa-pen"></i> Editing mode</span>` : ''}
-    </div>
-    <div class="progress-wrap">
-      <div class="score-arc">
-        <svg width="72" height="72" viewBox="0 0 72 72">
-          <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"/>
-          <circle class="arc-fill" cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="url(#g1)" stroke-width="6"
-            stroke-dasharray="${dash} ${circ-dash}" stroke-dashoffset="0" stroke-linecap="round"
-            style="transform:rotate(-90deg);transform-origin:center;"/>
-          <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ffb74d"/><stop offset="100%" stop-color="#ff9f1c"/></linearGradient></defs>
-        </svg>
-        <div class="score-arc-label"><strong class="arc-total">${tot}</strong><span>/ 50</span></div>
+    <div class="rubric-container">
+      <div class="rubric-sticky">
+        <div class="rubric-header">
+          <h2 class="syne">${editingIndex !== null ? '✏️ Edit Scores' : 'Scoring Rubric'}</h2>
+          ${editingIndex !== null ? `<span style="font-size:0.75rem;color:var(--gold);"><i class="fas fa-pen"></i> Editing mode</span>` : ''}
+        </div>
+        <div class="progress-wrap">
+          <div class="score-arc">
+            <svg width="72" height="72" viewBox="0 0 72 72">
+              <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"/>
+              <circle class="arc-fill" cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="url(#g1)" stroke-width="6"
+                stroke-dasharray="${dash} ${circ-dash}" stroke-dashoffset="0" stroke-linecap="round"
+                style="transform:rotate(-90deg);transform-origin:center;"/>
+              <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ffb74d"/><stop offset="100%" stop-color="#ff9f1c"/></linearGradient></defs>
+            </svg>
+            <div class="score-arc-label"><strong class="arc-total">${tot}</strong><span>/ 50</span></div>
+          </div>
+          <div class="score-bars">${barsHtml}</div>
+        </div>
       </div>
-      <div class="score-bars">${barsHtml}</div>
-    </div>
-    ${criteriaHtml}
-    <div class="action-bar">
-      <button class="btn btn-primary" id="rSaveBtn" ${filled ? '' : 'disabled'}><i class="fas ${editingIndex !== null ? 'fa-pen' : 'fa-save'}"></i> ${editingIndex !== null ? 'Update Evaluation' : 'Save Evaluation'}</button>
-      <button class="btn btn-danger" id="rResetBtn"><i class="fas fa-rotate-left"></i> Reset All</button>
+      <div class="criteria-scroll">
+        ${criteriaHtml}
+      </div>
+      <div class="action-bar">
+        <button class="btn btn-primary" id="rSaveBtn" ${filled ? '' : 'disabled'}><i class="fas ${editingIndex !== null ? 'fa-pen' : 'fa-save'}"></i> ${editingIndex !== null ? 'Update Evaluation' : 'Save Evaluation'}</button>
+        <button class="btn btn-danger" id="rResetBtn"><i class="fas fa-rotate-left"></i> Reset All</button>
+      </div>
     </div>`;
 
   container.querySelectorAll('.criteria-header').forEach(hdr => {
-    hdr.addEventListener('click', () => {
+    hdr.addEventListener('click', (e) => {
+      // Don't toggle if clicking on input or button inside
+      if (e.target.closest('input') || e.target.closest('button') || e.target.closest('textarea')) return;
       const item = hdr.closest('.criteria-item');
       const wasOpen = item.classList.contains('open');
       container.querySelectorAll('.criteria-item').forEach(i => i.classList.remove('open'));
@@ -1405,7 +1504,7 @@ function renderRubricPanel(container) {
   });
 
   container.querySelectorAll('.stepper-btn').forEach(btn => {
-    btn.addEventListener('click', e => {
+    btn.addEventListener('click', (e) => {
       e.stopPropagation();
       const id = btn.dataset.id;
       const nv = Math.min(5, Math.max(0, (scores[id]||0) + parseInt(btn.dataset.dir)));
